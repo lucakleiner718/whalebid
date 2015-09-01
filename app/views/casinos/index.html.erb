@@ -1,0 +1,112 @@
+
+<div class="container">
+
+	<h1>Casinos</h1>
+<% if not user_signed_in? %>
+	<div class="row form-group">
+		<div class="pull-left">
+			<p>
+				Not yet a registered player?<br/>
+				Let casino's compete for you upcoming visit.
+			</p>
+			<%= link_to("Sign Up!", new_user_registration_path, class: "btn btn-primary full") %>
+		</div>
+
+		<div class="pull-right">
+			<p>
+				Are you with a casino?<br/>
+				Don't see your casino on the list?
+			</p>
+			<%= link_to("Casino Enrollment", new_user_registration_path + "?type=casino", class: "btn btn-primary full") %>
+		</div>
+	</div>
+<% end %>
+
+	<div class="row form-group casinos-list-wrapper">
+		<div class="col-sm-3">
+			<div class="panel panel-primary">
+		      	<div class="panel-heading">
+		        	<h3 class="panel-title">Filter Casino List</h3>
+		      	</div>
+
+		      	<div class="well">
+		      		<label>Search:</label>
+		      		<div class="form-group">
+		      			<input type="text" name="query" id="query" class="full" value="<%= params[:query] %>">
+		      		</div>
+		      		<a href="javascript:findCasinos()" class="btn btn-primary">Find</a>
+		      	</div>
+				<ul class="list-group">
+					<li class="list-group-item casino-market-item <%= 'active' if !params[:market] ||params[:market] == '' || params[:market] == 'all' %>">
+						<span class="badge"><%= @total_count %></span>
+						<a href="javascript:filterCasinos('')">All US Casinos</a>
+					</li>
+				<% @casino_markets.each do |market| %>
+					
+				  	<li class="list-group-item casino-market-item <%= 'active' if params[:market] == market %>">
+				  	<% if @markets_with_count[market] %>
+				    	<span class="badge"><%= @markets_with_count[market] %></span>
+				    <% else %>
+				    	<span class="badge">0</span>
+				    <% end %>
+				    	<a href="javascript:filterCasinos('<%= market %>')"><%= market %></a>
+				  </li>
+				 <% end %>
+				</ul>
+			</div>
+			
+		
+		</div>
+		<div class="col-sm-9">
+			<table class="table table-bordered table-condensed">
+			  <tr class="bid-index">
+					<th>Casino Name</th>
+					<th>Market</th>
+					<th>Number of Bids</th>
+					<th>City</th>
+					<th>State</th>
+					<th>Country</th>
+					<th>Action</th>
+			  </tr>
+
+			  <% @casinos.each do |casino| %>
+			  <tr class="bid-index">
+		    
+					<td><%= casino.casino_name %></td>
+					<td><%= casino.casino_market%></td>
+					<td><%= casino.bids.count %></td>
+			    	<td><%= casino.city %></td>
+					<td><%= casino.state %></td>
+					<td><%= casino.country %></td>
+		    
+					<td class="actions">
+				    <a href="#" data-href="<%= casino_path(casino.id) %>" class="casino-more-link">More Info</a>
+			    </td>
+			  </tr>
+			  <% end %>
+			</table>
+		</div>
+	</div>
+</div>
+
+</br>
+</br>
+
+<script>
+	var current_market = '<%= params[:market] %>'
+	function findCasinos(){
+		location.href = '<%= casinos_path %>?market=' + current_market + '&query=' + $('#query').val(); 
+	}
+
+	function filterCasinos(market){
+		current_market = market;
+		location.href = '<%= casinos_path %>?market=' + current_market + '&query=' + $('#query').val(); 
+	}
+
+	$(document).ready(function(){
+		$('.casino-more-link').click(function(e){
+			e.preventDefault();
+			location.href = $(this).data('href') + '?market=' + current_market + '&query=' + $('#query').val(); 
+		});
+	})
+</script>

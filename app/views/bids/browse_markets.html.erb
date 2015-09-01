@@ -1,0 +1,206 @@
+<div class="container">
+
+	<h1 class="text-center">Select Market for <span id="bid_name"></span></h1>
+
+	<div class="row form-group">
+		<div class="pull-left">
+			<p>
+				Finished selecting a market?<br/>
+				<%= link_to("<<Back to My Bid", new_bid_path, class: "btn btn-primary full") %>
+			</p>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-sm-12 well">
+			Use the navigation pane on the left to see all the participating casinos in that market.<br/>
+			Click Select This Market at the top of the casino list to add that market to your bid. When finished, click << Back to My Bid
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-sm-9 text-right">
+			<p>
+				<%= link_to("Select This Market", "#", class: "btn btn-primary btn-select-market") %>
+			</p>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="row form-group casinos-list-wrapper">
+		<div class="col-sm-3">
+			<div class="panel panel-primary">
+		      	<div class="panel-heading">
+		        	<h3 class="panel-title">Filter Casino List</h3>
+		      	</div>
+
+		      	<div class="well">
+		      		<label>Search:</label>
+		      		<div class="form-group">
+		      			<input type="text" name="query" id="query" class="full" value="<%= params[:query] %>">
+		      		</div>
+		      		<a href="javascript:findCasinos()" class="btn btn-primary">Find</a>
+		      	</div>
+				<ul class="list-group">
+					<li class="list-group-item casino-market-item <%= 'active' if !params[:market] ||params[:market] == '' || params[:market] == 'all' %>">
+						<span class="badge"><%= @total_count %></span>
+						<a href="javascript:filterCasinos('')">All US Casinos</a>
+					</li>
+				<% @casino_markets.each do |market| %>
+					
+				  	<li class="list-group-item casino-market-item <%= 'active' if params[:market] == market %>">
+				  	<% if @markets_with_count[market] %>
+				    	<span class="badge"><%= @markets_with_count[market] %></span>
+				    <% else %>
+				    	<span class="badge">0</span>
+				    <% end %>
+				    	<a href="javascript:filterCasinos('<%= market %>')"><%= market %></a>
+				  </li>
+				 <% end %>
+				</ul>
+			</div>
+			
+		
+		</div>
+		<div class="col-sm-6">
+			<table class="table table-bordered table-condensed">
+			  <tr class="bid-index">
+					<th>Casino Name</th>
+					<th>Market</th>
+					<th>Bids<br />Received</th>
+					
+					<th>Show</th>
+
+			  </tr>
+
+			  <% @casinos.each do |casino| %>
+			  <tr class="bid-index">
+		    
+					<td><%= casino.casino_name %></td>
+					<td><%= casino.casino_market%></td>
+					<td><%= casino.bids.count %></td>
+			    			    
+					<td class="actions">
+					    <a href="#" data-href="<%= browse_markets_bids_path %>" data-casino-id="<%= casino.id %>" class="casino-more-link btn btn-primary btn-sm">More Info</a>
+				    </td>
+
+			  </tr>
+			  <% end %>
+			</table>
+		</div>
+
+		<div class="col-sm-3">
+			<div class="panel panel-primary">
+		      	<div class="panel-heading">
+		        	<h3 class="panel-title">Selected Market</h3>
+		      	</div>
+
+		      	<div class="form-group">
+		      		<div class="col-sm-12 casinos-in-bid">
+		      			<br />
+		      			<div class="form-group">
+		      				<div>
+		      					You've selected:<br />
+		      					<span class="casino-name">(None)</span>
+		      					<br/><br/>
+		      					Number of casinos: <span class="number-of-casinos"></span>
+		      				</div>
+		      				<a href="#" class="btn-remove btn btn-primary btn-sm">Remove</a>
+		      			</div>
+		      			
+		      		</div>
+		      	</div>
+
+		      	<div class="form-group">
+					<div class="col-sm-12">
+						<p>
+							Finished selecting a market?<br/>
+							<%= link_to("<<Back to My Bid", new_bid_path, class: "btn btn-primary full") %>
+						</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+		    </div>
+		</div>
+	</div>
+
+</div>
+
+<script>
+	var current_market = '<%= params[:market] %>'
+	function findCasinos(){
+		location.href = '<%= browse_markets_bids_path %>?market=' + current_market + '&query=' + $('#query').val(); 
+	}
+
+	function filterCasinos(market){
+		current_market = market;
+		location.href = '<%= browse_markets_bids_path %>?market=' + current_market + '&query=' + $('#query').val(); 
+	}
+
+
+	if($.cookie("temp_bid") == undefined || $.cookie("temp_bid") == ""){
+		location.href="<%= new_bid_path %>"
+	}
+
+	var formObj = JSON.parse($.cookie("temp_bid"));
+	console.log(formObj);
+
+	$(document).ready(function(){
+		var markets_with_count = {};
+		<% @casino_markets.each do |market| %>
+			<% if @markets_with_count[market] %>
+				markets_with_count["<%= market %>"] = <%= @markets_with_count[market] %>;
+			<% else %>
+				markets_with_count["<%= market %>"] = 0;
+			<% end %>
+		<% end %>
+
+		function loadMarket(){
+			$("#bid_name").html(formObj["bid[bid_name]"]);
+			if(formObj["bid[market]"] != ""){
+				$(".casino-name").html(formObj["bid[market]"]);
+				$(".number-of-casinos").html(markets_with_count[formObj["bid[market]"]]);
+				$('.btn-select-market').html("You'v selected<br/>" + formObj["bid[market]"]);
+				$('.btn-select-market').attr("disabled", true);
+			}else{
+				$(".casino-name").html("(None)");
+				$(".number-of-casinos").html("");
+				$('.btn-select-market').html("Select This Market")
+				$('.btn-select-market').attr("disabled", false);
+			}
+			
+			$.removeCookie("temp_bid", { path: '/' });
+			$.cookie("temp_bid", JSON.stringify(formObj), { path: '/' });
+		}
+
+		loadMarket()
+
+		$(".btn-select-market").click(function(e){
+			e.preventDefault();
+			if(current_market == "" || current_market == "all"){
+				alert("Please select a market on the navigation pane!")
+				return;
+			}
+
+			if(markets_with_count[current_market] == 0){
+				alert("No casinos in the select market. Please select a market with casinos.")
+				return;
+			}
+			formObj["bid[market]"] = current_market;
+			console.log(formObj["bid[market]"])
+			loadMarket();
+		});
+
+		$(".btn-remove").click(function(e){
+			e.preventDefault();
+			formObj["bid[market]"] = "";
+			loadMarket();
+		});
+
+		$('.casino-more-link').click(function(e){
+			e.preventDefault();
+			location.href = $(this).data('href') + '?casino_id=' + $(this).data('casino-id') + 'browse_markets&market=' + current_market + '&query=' + $('#query').val(); 
+		});
+	});
+</script>

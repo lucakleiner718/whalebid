@@ -1,0 +1,90 @@
+<% current_bid = Bid.first :conditions => ["user_id = ? and close_at >= ?", current_user.id, Date.today.to_s] %>
+<div class="well">
+<% if current_bid.nil? %>
+	<div class="form-group">
+		<%= link_to "Create New Bid", new_bid_path, class: "btn btn-primary btn-sm" %>
+	</div>
+<% end %>
+	<div class="row form-group">
+		
+		<div class="col-sm-12">
+			<table class="table bids-table table-bordered table-hover">
+				<thead>
+				  	<tr>
+						<th>Bid Number</th>
+						<th>Bid Name</th>
+						<th>Created At</th>
+						<th>Close At</th>
+						<th>Offers Received</th>
+						<th>Wager Level</th>
+						<th>Bid Status</th>
+						<th>Offer Response</th>
+						<th>Action</th>
+				  	</tr>
+				</thead>
+
+				<tbody>
+				<% @bids.each do |bid| %>
+					<tr>
+						<td><%= bid.reference_number %></td>
+						<td><%= bid.bid_name %></td>
+						<td><%= bid.created_at.strftime("%B %d, %Y") %></td>
+						<td><%= bid.close_at.strftime("%B %d, %Y") %></td>
+						<td><%= bid.offers.where("offer_status is null or offer_status!=?","Declined by casino").count %></td>
+						<td><%= bid.wager_level %></td>
+						<td>
+							<%= bid.status %>
+						</td>
+						<td>Awaiting Response</td>
+						<td><%= link_to "Show", bid_path(bid.id), class: "btn btn-primary btn-sm" %></td>
+					</tr>
+					
+				<% end %>
+
+				</tbody>
+									       
+			</table>
+		</div>
+	</div>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	jQuery.fn.dataTableExt.oSort['date-dmy-asc']  = function(x,y) {
+		x_date = new Date(x);
+		y_date = new Date(y);
+		
+	    return ((x_date < y_date) ? -1 : ((x_date > y_date) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['date-dmy-desc']  = function(x,y) {
+		x_date = new Date(x);
+		y_date = new Date(y);
+	    return ((x_date > y_date) ? -1 : ((x_date < y_date) ?  1 : 0));
+	};
+
+
+	var offers_table = $('.bids-table').DataTable( {
+        "order": [[ 2, "desc" ]],
+        "paging":   false,
+        "ordering": true,
+        "info":     false,
+        "searching":false,
+        "columnDefs": [
+		    { "orderable": false, "targets": 0},
+		    { "orderable": false, "targets": 1},
+		    { "orderable": true, "targets": 2, "type": "date-dmy"},
+		    { "orderable": true, "targets": 3, "type": "date-dmy"},
+		    { "orderable": false, "targets": 4},
+		    { "orderable": false, "targets": 5},
+		    { "orderable": false, "targets": 6},
+		    { "orderable": false, "targets": 7},
+		    { "orderable": false, "targets": 8},
+		]
+    } );
+
+    $(".dataTables_filter").hide();
+
+});
+</script>

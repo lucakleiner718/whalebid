@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  casino_name: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  postal_code: MyString
+  casino_market: MyString
+
+two:
+  id: 2
+  casino_name: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  postal_code: MyString
+  casino_market: MyString

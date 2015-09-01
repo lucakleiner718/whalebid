@@ -1,0 +1,281 @@
+@import 'bootstrap';
+
+body { 
+	padding-top: 70px; 
+	&.dialog-body{
+		padding-top :0;
+	}
+}
+
+input[type="date"] {
+	line-height: inherit;
+}
+
+.red {
+	color: red;
+}
+
+.time-select{
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+#error_explanation {
+	color: red;
+}
+
+.alert-danger{
+	a{
+		color: #a94442;
+		text-decoration: underline;
+	}
+}
+
+.full{
+	width: 100%;
+}
+
+.well {
+	min-height: 20px;
+	padding: 19px;
+	margin-bottom: 0px;
+	background-color: whitesmoke;
+	border: 1px solid #e3e3e3;
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	}
+	20media="all"
+	* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.bottom-bordered{
+	border-bottom: 1px solid #428bca;
+}
+
+.table-cell{
+	display: table-cell;
+	vertical-align: top;
+}
+
+.clear{
+	clear: both;
+}
+
+.bordered-table-container{
+	border: 1px solid #428bca;
+	margin-bottom: 20px;
+
+	.header{
+		background-color: #eeeeee;
+		font-size: 18px;
+		padding-top: 10px;
+		border-bottom: 1px solid #428bca;
+	}
+
+	.filters{
+		padding: 10px;
+		border-bottom: 1px solid #428bca;
+	}
+}
+
+.heading-blue{
+	padding: 5px 0;
+	background-color: #428bca;
+	color: white;
+}
+
+input[type="file"]{
+	width: 200px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.btn-remove, .btn-remove:hover{
+	background-color: rgb(241, 26, 26);
+	border-color: rgb(241, 26, 26);
+	padding: 0px 10px;
+	font-weight: bold;
+}
+
+.btn-cancel, .btn-cancel:hover{
+	background-color: rgb(241, 26, 26);
+	border-color: rgb(241, 26, 26);
+}
+
+.btn-select-market, .btn-select-market:hover{
+	background-color: green;
+	border-color: green;
+	padding: 3px 10px;
+	font-weight: bold;
+}
+
+.btn-select-market[disabled]{
+	background-color: green;
+	border-color: green;
+	padding: 3px 10px;
+	font-weight: bold;
+}
+
+.casino-more-link, .casino-add2bid-link{
+	padding: 0 3px;
+}
+
+
+/***************************
+PAGINATION
+****************************/
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active{
+	/*display: none;*/
+}
+
+/***************************
+NAVIGATION
+****************************/
+
+.navbar-fixed-top {
+	padding-bottom: 10px;
+	height: auto;
+	
+}
+
+.nav, .login {
+	margin-top: 10px;
+	color: gray;
+}
+
+.navbar-right {
+	padding-right: 40px;
+}
+
+.login {
+	padding-top: 5px;
+}
+
+.navbar-brand {
+	font-size: 22px;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+	color: white;
+	background-color: inherit;
+	border-bottom: 2px solid #ffffff;
+}
+
+/***************************
+JUMBOTRON
+****************************/
+
+.jumbotron h1 {
+	font-size: 3.0em;
+}
+
+
+
+.jumbotron {
+	background-image: url('/assets/LV_strip_at_night2.jpg');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	height: 430px;
+	color: white;
+	padding: 60px;
+	padding-left: 270px;
+}
+
+/***************************
+STEPS
+****************************/
+
+
+.glyphicon-upload,
+.glyphicon-check,
+.glyphicon-heart  {
+	font-size: 60px;
+} 
+
+
+.steps-section {
+	height: auto;
+	padding-top: 2px;
+}
+
+.step-number {
+	padding: 0px;
+	margin: 0px;
+}
+
+.step-heading {
+	margin-top: 3px;
+	margin-bottom: 30px;
+}
+
+.step {
+	font-size: 15px;
+	text-align: center;
+}
+
+
+/***************************
+BENEFITS
+****************************/
+
+hr {
+	border-top: 3px solid #aaaaaa;
+}
+
+
+
+
+
+/***************************
+FOOTER
+****************************/
+
+#footer {
+	background: gray;
+	color: white;
+	height: 200px;
+}
+
+
+
+/***************************
+TABLES
+****************************/
+
+.table-nonfluid {
+   width: 70%;
+}
+
+.form-xyz {
+	width: 70%;
+}
+
+.wager-level tr th {
+	text-align: center;
+}
+
+.wager-level tr td {
+	text-align: center;
+}
+
+.bid-index {
+	tex-align: left;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: darkgray;
+}
+
+
+/* custom jquery datatable */
+.dataTables_wrapper .dataTables_length{
+	padding: 10px;
+}
+
+
+

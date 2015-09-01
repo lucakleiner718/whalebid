@@ -1,0 +1,156 @@
+<%= form_for @bid, url: {action: "create"} do |f| %>
+	Here are the params: <%= params.inspect %>	</br>
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Step 1: Create a name for your bid.</h3>
+		</div>
+  
+		<div class="well">
+			<p class="row col-sm-offset-1">Your bid name will help you identify this bid from other bids you have made.</p></br>
+			<div class="row form-group">
+		  	<%= f.label(:bid_name, "Bid Name:", class: "col-sm-2 text-right") %>
+		    <%= f.text_field(:bid_name, placeholder: "e.g., \"Las Vegas Trip\" or \"Weekend Getaway\" ", class: "col-sm-5", style: "padding-left: 3px;") %></br>
+		 	</div>
+		</div><!--Close well-->
+	</div><!--Close panel-->
+	
+	
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Step 2: Select which casinos should receive your bid. </br></br>
+				You can select by market or you can select up to 5 individual casinos.</h3>
+		</div>
+  
+		<div class="well">
+			<p class="row col-sm-offset-1">If you want to target only specific casinos, leave this field blank and select up to 5 casinos below.</p></br>
+			<div class="row form-group">
+		  	<%= f.label(:market, "Market:", class: "col-sm-2 text-right") %>
+					<div class="col-sm-4">
+		    		<%= f.collection_select(:market, Casino.all, :id, :casino_market, {prompt: "Select your target casino market..."}, {class: "form-control", style: "padding-left: 2px;"}) %></br>
+					</div>
+		 	</div>
+		</div><!--Close well-->
+		
+		<div class="well">	
+			</br>
+		  <div class="form-group">
+				<div class="row">
+				First casino: <%= @bid.casinos[0].casino_name if @bid.casinos[0]%></br>	
+		    <%= f.label(:casino_ids, "Casino #1:", class: "col-sm-2 text-right", style: "padding-top: 5px;") %>
+					<div class="col-sm-4">
+						<%= f.collection_select(:casino_ids, @casinos, :id, :casino_name, {prompt: "This is my first choice..."}, {class: "form-control", style: "padding-left: 2px;"}) %></br>
+					</div>
+				</div>
+		    
+				<div class="row">
+			 	Second casino: <%= @bid.casinos[1].casino_name if @bid.casinos[1]%></br>
+		    <%= f.label(:casino_ids, "Casino #2:", class: "col-sm-2 text-right", style: "padding-top: 5px;") %>
+					<div class="col-sm-4">
+						<%= f.collection_select(:casino_ids, Casino.all, :id, :casino_name, {prompt: "This is my second choice..."}, {class: "form-control", style: "padding-left: 2px;"}) %></br>
+					</div>
+				</div>
+				
+				<div class="row">
+				Third casino: <%= @bid.casinos[2].casino_name if @bid.casinos[2]%></br>
+		    <%= f.label(:casino_ids, "Casino #3:", class: "col-sm-2 text-right", style: "padding-top: 5px;") %>
+					<div class="col-sm-4">
+						<%= f.collection_select(:casino_ids, Casino.all, :id, :casino_name, {prompt: "This is my third choice..."}, {class: "form-control", style: "padding-left: 2px;"}) %></br>
+					</div>
+				</div>
+				
+				<div class="row">
+		    <%= f.label(:casino4, "Casino #4:", class: "col-sm-2 text-right", style: "padding-top: 5px;") %>
+					<div class="col-sm-4">
+						<%= f.collection_select(:casino4, Casino.all, :id, :casino_name, {prompt: "This is my fourth choice..."}, {class: "form-control", style: "padding-left: 2px;"}) %></br>
+					</div>
+				</div>
+				
+		    <div class="row">
+		    <%= f.label(:casino5, "Casino #5:", class: "col-sm-2 text-right", style: "padding-top: 5px;") %>
+					<div class="col-sm-4">
+						<%= f.collection_select(:casino5, Casino.all, :id, :casino_name, {prompt: "This is my fifth choice..."}, {class: "form-control", style: "padding-left: 2px;"}) %></br>
+					</div>
+				</div>
+	    
+		  </div>
+		</div> <!--Close well-->
+	</div><!--Close panel for Step 1-->
+
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Step 3: When Do You Plan to Visit, and How Many People Are in Your Group?</h3>
+		</div>
+ 
+		
+		<div class="well well-lg">
+			<div class="row">
+				</br>
+			  <div class="col-sm-offset-1 col-sm-5">Enter your planned arrival and departure dates.</div>
+			</div>
+		
+			</br>
+			<div class="row">
+		  	<%= f.label(:arrival_date, "Arrival Date:", class: "col-sm-2 text-right") %>
+		    <%= f.date_select(:arrival_date, class: "col-sm-6") %> 	
+			</div>
+		
+			<div class="row">
+				</br>
+				<%= f.label(:depature_date, "Departure Date:", class: "col-sm-2 text-right") %>
+		    <%= f.date_select(:departure_date, class: "col-sm-6 text-left") %></br>
+			</div>
+		</div><!--Close well-->
+					
+		<div class="well well-lg">
+			<div class="row">
+				<div class="col-sm-offset-1 col-sm-5">How many will be staying with you?</div>
+			</div>
+			
+			<div class="row">
+				</br>
+				<%= f.label(:adults, "Adults:", class: "col-sm-2 text-right") %>
+		    <%= f.select(:adults, 1..5, class: "col-sm-2") %>
+		 	</div>
+		
+			<div class="row">
+				</br>
+				<%= f.label(:children, "Children:", class: "col-sm-2 text-right") %>
+		    <%= f.select(:children, 1..7, class: "col-sm-2") %>
+		 	</div>
+		</div><!--Close well-->		
+	</div><!--Close panel-->
+	
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Step 4: Select the amount you plan to gamble during your visit?</h3>
+		</div>
+		
+		<div class="well well-lg" style="background: white;">		
+			<div class="row">
+				<%= f.label(:wager_level, "What is the amount you will commit to gamble?", class: "col-sm-8 text-left") %></br>
+				</br>
+			</div>
+			
+			<%= render(partial: "select_wager", locals: {f: f}) %>
+			
+			</br>
+			</br>
+			
+			<%= f.check_box(:bid_fee_reimbursement, {checked: true }, "1", "0") %> Yes, I want my bid fee to be reimbursed by the casino I select.</br>
+			
+		</div><!--Close well-->
+	</div><!--Close panel-->
+	
+
+
+</br>
+</br>
+
+<% end %>
+
+	  
+
+
+

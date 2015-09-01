@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  bid_id: 1
+  casino_name: MyString
+  city: MyString
+  offer_date: 2014-06-09 11:05:18
+  expiration_date: 2014-06-09 11:05:18
+  offer_comment: MyText
+  offer_status: MyText
+
+two:
+  id: 2
+  bid_id: 1
+  casino_name: MyString
+  city: MyString
+  offer_date: 2014-06-09 11:05:18
+  expiration_date: 2014-06-09 11:05:18
+  offer_comment: MyText
+  offer_status: MyText

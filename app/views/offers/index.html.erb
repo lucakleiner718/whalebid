@@ -1,0 +1,406 @@
+<div class="well">
+
+	<h1 class="text-center">Manage Offers<br/><%= current_user.casino.casino_name %></h1>
+
+	<!-- start of open player bids -->
+	<div class="panel panel-primary bordered-table-container">
+		<div class="panel-heading">
+        	<h3 class="panel-title text-center">Offers<br/>Accepted or Awaiting Response</h3>
+      	</div>
+		<div class="filters">
+			<div class="table-cell">
+				Filters:&nbsp;&nbsp;
+			</div>
+			<div class="table-cell full">
+				<div class="row">
+					<div class="col-sm-3">
+						<input type="checkbox" checked="true" value="Accepted, Awaiting Response" class="chk-player-response open all">&nbsp;Player's Response - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" checked="true" class="chk-player-response open" value="Accepted">&nbsp;Accepted Offer<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" checked="true" value="Awaiting Response" class="chk-player-response open">&nbsp;Awaiting Response
+					</div>
+					<div class="col-sm-3">
+						<input type="checkbox" checked="true" class="chk-confirmed open all" value="Awaiting Your Response, Sent Response, Confirmed, Not Confirmed">&nbsp;Confirmed - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" checked="true" class="chk-confirmed open" value="Awaiting Your Response">&nbsp;Awaiting Your Response<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" checked="true" class="chk-confirmed open" value="Sent Response">&nbsp;Sent Response
+					</div>
+					<div class="col-sm-3">
+						<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" checked="true" class="chk-confirmed open" value="Confirmed">&nbsp;Confirmed<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" checked="true" class="chk-confirmed open" value="Not Confirmed">&nbsp;Not Confirmed
+					</div>
+					<div class="col-sm-3">
+						Show Offer Sent In The Last
+						<div class="row">
+							<div class="col-sm-6">
+								<input type="radio" name="show_period_open" checked="true" value="14" class="radio-period open">&nbsp;14 Days<br/>
+								<input type="radio" name="show_period_open" value="30" class="radio-period open">&nbsp;30 Days<br/>
+							</div>
+							<div class="col-sm-6">
+								<input type="radio" name="show_period_open" value="60" class="radio-period open">&nbsp;60 Days<br/>
+								<input type="radio" name="show_period_open" value="90" class="radio-period open">&nbsp;90 Days<br/>
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table bids-table table-bordered table-hover">
+					<thead>
+					  	<tr>
+							<th>Offer Number</th>
+							<th>Player Username</th>
+							<th>Wager Level</th>
+							<th>Offer Sent</th>
+							<th>Offer Expiration</th>
+							<th>Player's Response</th>
+							<th>Confirmed?</th>
+							<th>Action</th>
+							<th>Kind</th>
+							<th>Player Category</th>
+					  	</tr>
+					</thead>
+
+					<tbody>
+					<% @open_offers.each do |offer| %>
+						<tr>
+							<td><%= offer.reference_number %></td>
+							<td><%= offer.bid.user.player.username %></td>
+							<td><%= offer.bid.wager_level %></td>
+							<td><%= offer.created_at.strftime("%B %d, %Y") %></td>
+							<td><%= offer.expiration_date.strftime("%B %d, %Y") %></td>
+							<td>
+								<% if offer.offer_status.nil? %>
+									Awaiting Response
+								<% else %>
+									Accepted
+								<% end %>
+							</td>
+							<td>
+								<% if offer.offer_status.nil? %>
+									Not Confirmed
+								<% elsif offer.offer_status == "Accepted" %>
+									Awaiting Your Response
+								<% elsif offer.offer_status == "Responsed" %>
+									Sent Response
+								<% elsif offer.offer_status == "Confirmed" %>
+									Confirmed
+								<% end %>
+							</td>
+
+							<td><%= link_to "Show", offer_path(offer.id) + "?type=casino", class: "btn btn-primary" %></td>
+							<td>Open</td>
+							<td><%= offer.bid.player_category %></td>
+						</tr>
+						
+					<% end %>
+						
+					</tbody>
+										       
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- end of open player bids -->
+
+	<!-- start of closed player bids -->
+	<div class="panel panel-primary bordered-table-container">
+		<div class="panel-heading">
+        	<h3 class="panel-title text-center">Offers<br/>Expired or Declined by Player</h3>
+      	</div>
+		<div class="filters">
+			<div class="table-cell">
+				Filters:&nbsp;&nbsp;
+			</div>
+			<div class="table-cell full">
+				<div class="row">
+					<div class="col-sm-3">
+						<input type="checkbox" checked="true" value="Declined, Offer Expired" class="chk-player-response closed all">&nbsp;Player's Response - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" checked="true" class="chk-player-response closed" value="Declined">&nbsp;Declined Offer<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" checked="true" value="Offer Expired" class="chk-player-response closed">&nbsp;Offer Expired
+					</div>
+					<div class="col-sm-3">
+						Show Offer Sent In The Last
+						<div class="row">
+							<div class="col-sm-6">
+								<input type="radio" name="show_period_closed" checked="true" value="14" class="radio-period closed">&nbsp;14 Days<br/>
+								<input type="radio" name="show_period_closed" value="30" class="radio-period closed">&nbsp;30 Days<br/>
+							</div>
+							<div class="col-sm-6">
+								<input type="radio" name="show_period_closed" value="60" class="radio-period closed">&nbsp;60 Days<br/>
+								<input type="radio" name="show_period_closed" value="90" class="radio-period closed">&nbsp;90 Days<br/>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table bids-table table-bordered table-hover">
+					<thead>
+					  	<tr>
+							<th>Offer Number</th>
+							<th>Player Username</th>
+							<th>Wager Level</th>
+							<th>Offer Sent</th>
+							<th>Offer Expiration</th>
+							<th>Player's Response</th>
+							<th>Confirmed?</th>
+							<th>Action</th>
+							<th>Kind</th>
+							<th>Player Category</th>
+					  	</tr>
+					</thead>
+
+					<tbody>
+					<% @closed_offers.each do |offer| %>
+						<tr>
+							<td><%= offer.reference_number %></td>
+							<td><%= offer.bid.user.player.username %></td>
+							<td><%= offer.bid.wager_level %></td>
+							<td><%= offer.created_at.strftime("%B %d, %Y") %></td>
+							<td><%= offer.expiration_date.strftime("%B %d, %Y") %></td>
+							<td>
+								<%= offer.offer_status %>
+							</td>
+							<td>Not Confirmed</td>
+
+							<td><%= link_to "Show", offer_path(offer.id) + "?type=casino", class: "btn btn-primary" %></td>
+							<td>Open</td>
+							<td><%= offer.bid.player_category %></td>
+						</tr>
+					<% end %>
+						
+					</tbody>
+										       
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- end of closed player bids -->
+
+	
+</div>
+
+<script>
+$(document).ready(function(e){
+	jQuery.fn.dataTableExt.oSort['date-dmy-asc']  = function(x,y) {
+		x_date = new Date(x);
+		y_date = new Date(y);
+		
+	    return ((x_date < y_date) ? -1 : ((x_date > y_date) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['date-dmy-desc']  = function(x,y) {
+		x_date = new Date(x);
+		y_date = new Date(y);
+	    return ((x_date > y_date) ? -1 : ((x_date < y_date) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['wager-level-asc']  = function(x,y) {
+		
+		if(x == "More than $1,000,000"){
+			return 1;
+		}
+
+		if(y == "More than $1,000,000"){
+			return -1;
+		}
+
+		x_value = parseInt(x.split(" - ")[0].replace(",", "").replace("$", ""));
+		y_value = parseInt(y.split(" - ")[0].replace(",", "").replace("$", ""));	
+
+	    return ((x_value < y_value) ? -1 : ((x_value > y_value) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['wager-level-desc']  = function(x,y) {
+		
+		if(x == "More than $1,000,000"){
+			return -1;
+		}
+
+		if(y == "More than $1,000,000"){
+			return 1;
+		}
+
+		x_value = parseInt(x.split(" - ")[0].replace(",", "").replace("$", ""));
+		y_value = parseInt(y.split(" - ")[0].replace(",", "").replace("$", ""));		
+	    return ((x_value > y_value) ? -1 : ((x_value < y_value) ?  1 : 0));
+	};
+
+    var playerResponseArray = ["Accepted", "Awaiting Response", "Declined", 
+    					"Offer Expired"];
+    var confirmedArray = ["Awaiting Your Response", "Sent Response", "Confirmed", "Not Confirmed"];
+
+	jQuery.fn.dataTable.ext.search.push(
+	    function( settings, data, dataIndex ) {
+    		if( playerResponseArray.indexOf(data[5]) != -1 ){
+    			return true;
+    		}else{
+    			
+    			return false;
+    		}
+	    }
+	);
+
+	jQuery.fn.dataTable.ext.search.push(
+	    function( settings, data, dataIndex ) {
+    		if( confirmedArray.indexOf(data[6]) != -1 ){
+    			return true;
+    		}else{
+    			
+    			return false;
+    		}
+	    }
+	);
+
+	jQuery.fn.dataTable.ext.search.push(
+	    function( settings, data, dataIndex ) {
+    		var show_period_open = 14;
+    		$(".radio-period.open").each(function(){
+    			if($(this).is(":checked")){
+    				show_period_open = parseInt($(this).val());
+    			}
+    		});
+
+    		console.log(show_period_open);
+
+    		var show_period_closed = 14;
+    		$(".radio-period.closed").each(function(){
+    			if($(this).is(":checked")){
+    				show_period_closed = parseInt($(this).val());
+    			}
+    		});
+
+    		console.log(show_period_closed);
+
+    		var offer_sent_date = new Date(data[3]);
+    		var today = new Date();
+
+    		if(data[8] == "Open"){
+    			if((today - offer_sent_date)/3600/24/1000 <= show_period_open){
+    				return true;
+    			}else{
+    				return false;
+    			}
+    			
+    		}else{
+    			if((today - offer_sent_date)/3600/24/1000 <= show_period_closed){
+    				return true;
+    			}else{
+    				return false;
+    			}
+    		}
+	    }
+	);
+
+	
+
+	var bids_table = $('.bids-table').DataTable( {
+		"dom": '<"wrapper"ftlip>',
+        "order": [[ 1, "asc" ]],
+        "paging":   true,
+        "ordering": true,
+        "info":     false,
+        "searching":true,
+        "aLengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "iDisplayLength": 5,
+
+       	"oLanguage": {
+       		"sLengthMenu": "Items per page _MENU_",
+         	"oPaginate": {
+           		"sNext": "Next",
+           		"sPrevious": "Previous",
+
+         	}
+       	},
+        "columnDefs": [
+		    { "orderable": false, "targets": 0},
+		    { "orderable": true, "targets": 1},
+		    { "orderable": true, "targets": 2, "type": "wager-level"},
+		    { "orderable": true, "targets": 3, "type": "date-dmy"},
+		    { "orderable": true, "targets": 4, "type": "date-dmy"},
+		    { "orderable": false, "targets": 5},
+		    { "orderable": true, "targets": 6},
+		    { "orderable": false, "targets": 7},
+		    { "orderable": false, "targets": 8, "visible": false},
+            { "orderable": false, "targets": 9, "visible": false},
+
+		]
+    } );
+
+
+    $(".dataTables_filter").hide();
+
+    $(".chk-player-response").change(function(e){
+   		var values = $(this).val().split(", ");
+   		if($(this).is(":checked") == false){
+   			
+   			for(var i=0; i<values.length; i++){
+   				if(playerResponseArray.indexOf( values[i] ) != -1){
+   					playerResponseArray.splice(playerResponseArray.indexOf( values[i] ), 1)
+   				}
+   			}
+   		}else{
+   			for(var i=0; i<values.length; i++){
+   				if(playerResponseArray.indexOf( values[i] ) == -1){
+   					playerResponseArray.push( values[i] );
+   				}
+   			}
+   		}
+
+   		bids_table.draw();
+
+   	});
+
+   	$(".chk-player-response.open.all").change(function(e){
+   		$(".chk-player-response.open:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+   	$(".chk-player-response.closed.all").change(function(e){
+   		$(".chk-player-response.closed:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+   	$(".chk-confirmed").change(function(e){
+   		var values = $(this).val().split(", ");
+   		if($(this).is(":checked") == false){
+   			
+   			for(var i=0; i<values.length; i++){
+   				if(confirmedArray.indexOf( values[i] ) != -1){
+   					confirmedArray.splice(confirmedArray.indexOf( values[i] ), 1)
+   				}
+   			}
+   		}else{
+   			for(var i=0; i<values.length; i++){
+   				if(confirmedArray.indexOf( values[i] ) == -1){
+   					confirmedArray.push( values[i] );
+   				}
+   			}
+   		}
+
+   		bids_table.draw();
+
+   	});
+
+   	$(".chk-confirmed.open.all").change(function(e){
+   		$(".chk-confirmed.open:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+   	$(".radio-period").click(function(){
+   		bids_table.draw();
+   	});
+
+
+});
+</script>

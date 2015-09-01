@@ -1,0 +1,64 @@
+<%= f.fields_for :casino, resource.casino do |casino_form| %>	
+	<div class="well">
+
+		<div class="row form-group">
+			<%= casino_form.label(:contact_first_name, "First Name", class: "col-sm-2 text-right") %>
+			<%= casino_form.text_field(:contact_first_name, class: "col-sm-5") %></br>
+		</div>
+		<div class="row form-group">
+			<%= casino_form.label(:contact_last_name, "Last Name", class: "col-sm-2 text-right") %>
+			<%= casino_form.text_field(:contact_last_name, class: "col-sm-5") %></br>
+		</div>
+		<div class="row form-group">
+			<%= casino_form.label(:contact_title, "Title/Postion", class: "col-sm-2 text-right") %>
+			<%= casino_form.text_field(:contact_title, class: "col-sm-5") %></br>
+		</div>
+		<div class="row form-group">
+			<%= casino_form.label(:office_phone, "Office Phone Number", class: "col-sm-2 text-right") %>
+			<%= casino_form.phone_field(:office_phone, class: "col-sm-5", placeholder: "(###) ###-####") %></br>
+		</div>
+		<div class="row form-group">
+			<%= casino_form.label(:mobile_phone, "Mobile Phone Number", class: "col-sm-2 text-right") %>
+			<%= casino_form.phone_field(:mobile_phone, class: "col-sm-5", placeholder: "(###) ###-####") %></br>
+		</div>
+
+		<div class="row form-group col-sm-offset-2">
+          	<% if resource.casino.avatar? %>
+				<img width="70px" alt="avatar" class="user_casino_attributes_avatar_preview" src="<%= resource.casino.avatar_url(:thumb) %>" />
+			<% else %>
+				<img width="70px" class="user_casino_attributes_avatar_preview" src="/no_image.png" />
+			<% end %>
+        </div>
+		<div class="row form-group">
+          <%= casino_form.label :avatar, class: "col-sm-2 text-right" %>
+          <%= casino_form.file_field :avatar, class: "col-sm-5" , accept: "image/*"%>
+          <%= casino_form.hidden_field :avatar_cache %>
+         
+        </div>
+
+        
+
+		<div class="row form-group">
+			<%= f.label(:email, "Email", class: "col-sm-2 text-right") %>
+			<%= f.text_field(:email, class: "col-sm-5") %></br>
+		</div>
+		<div class="row form-group">
+			<%= f.label(:password, "Password", class: "col-sm-2 text-right") %>
+			<%= f.password_field(:password, class: "col-sm-5") %></br>
+		</div>
+		<div class="row form-group">
+			<%= f.label(:password_confirmation, "Confirm Password", class: "col-sm-2 text-right") %>
+			<%= f.password_field(:password_confirmation, class: "col-sm-5") %></br>
+		</div>
+
+		<div class="row form-group">
+			<%= casino_form.label(:contact_message, "Message", class: "col-sm-2 text-right") %>
+			<%= casino_form.text_area(:contact_message, placeholder: "Enter the contact message here", class: "col-sm-5", rows: "5") %>
+		</div>
+
+	</div>
+	<div class="text-center">
+		<a href="javascript:goPage(0)" class="btn btn-primary btn-lg">Previous Page</a>
+		<a href="javascript:goPage(2)" class="btn btn-primary btn-lg">Next Page</a>
+	</div>
+<% end %>

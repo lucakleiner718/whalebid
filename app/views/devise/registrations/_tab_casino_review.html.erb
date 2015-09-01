@@ -1,0 +1,377 @@
+<%= f.fields_for :casino, resource.casino do |casino_form| %>	
+	<div class="well">
+	<% if resource.id %>
+		<%= link_to "Close Account", user_registration_path, class: "btn btn-primary account-close-link", id: "close_account", confirm: "Are you sure you want to close this account?", method: "delete" %>
+	<% end %>
+		<fieldset>
+			<legend>Casino Info</legend>
+		  	<div class="row form-group">
+		  		
+		  		<%= casino_form.label :casino_name, "Casino Name:", class: "col-sm-4" %>
+		  		<div class="col-sm-5" id="user_casino_attributes_casino_name_preview">
+		  			<%= resource.casino.casino_name %>
+		  		</div>
+
+		  	</div>
+
+		  	<div class="row form-group">
+		  		<%= casino_form.label :casino_market, "Casino Market:", class: "col-sm-4" %>
+		  		<div class="col-sm-5" id="user_casino_attributes_casino_market_preview">
+		  			<%= resource.casino.casino_market %>
+		  		</div>
+		  	</div>
+
+		  	<div class="row form-group">
+		  		<%= casino_form.label(:address, "Address:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_address_preview">
+		    		<%= resource.casino.address %>
+		    	</div>
+		 	</div>
+
+		  	<div class="row form-group">
+		  		<%= casino_form.label(:city, "City:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_city_preview">
+		    		<%= resource.casino.city %>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:state, "State:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_state_preview">
+		    		<%= resource.casino.state %>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:postal_code, "Postal Code:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_postal_code_preview">
+		    		<%= resource.casino.postal_code %>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:country, "Country:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_country_preview">
+		    		<%= resource.casino.country %>
+		    	</div>
+		 	</div>
+
+		  	<div class="row form-group">
+		  		<%= casino_form.label :phone, "Casino Phone Number:", class: "col-sm-4" %>
+		  		<div class="col-sm-5" id="user_casino_attributes_phone_preview">
+		    		<%= resource.casino.phone %>
+		    	</div>
+		  	</div>
+
+		  	<div class="row form-group">
+		  		<%= casino_form.label :website, "Casino Website URL:", class: "col-sm-4" %>
+		  		<div class="col-sm-5" id="user_casino_attributes_website_preview">
+		    		<%= resource.casino.website %>
+		    	</div>
+		  	</div>
+		  	<div class="col-sm-1 pull-right">
+	  			<a href="javascript:goPage(0)" class="btn btn-primary btn-small">Edit</a>
+	  		</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>Contact Info</legend>
+			<div class="row form-group">
+				<%= casino_form.label :avatar, "Avatar:", class: "col-sm-4" %>
+	          	<div class="col-sm-5">
+	          	<% if resource.casino.avatar? %>
+					<img width="70px" alt="avatar" class="user_casino_attributes_avatar_preview" src="<%= resource.casino.avatar_url(:thumb) %>" />
+				<% else %>
+					<img width="70px" class="user_casino_attributes_avatar_preview" src="/no_image.png" />
+				<% end %>
+				</div>
+	        </div>
+		  	<div class="row form-group">
+		  		
+		  		<%= casino_form.label :contact_first_name, "First Name:", class: "col-sm-4" %>
+		  		<div class="col-sm-5" id="user_casino_attributes_contact_first_name_preview">
+		  			<%= resource.casino.contact_first_name %>
+		  		</div>
+
+		  	</div>
+
+		  	<div class="row form-group">
+		  		<%= casino_form.label :contact_last_name, "Last Name:", class: "col-sm-4" %>
+		  		<div class="col-sm-5" id="user_casino_attributes_contact_last_name_preview">
+		  			<%= resource.casino.contact_last_name %>
+		  		</div>
+		  	</div>
+
+		  	<div class="row form-group">
+		  		<%= casino_form.label(:contact_title, "Title/Position:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_contact_title_preview">
+		    		<%= resource.casino.contact_title %>
+		    	</div>
+		 	</div>
+
+		  	<div class="row form-group">
+		  		<%= casino_form.label(:office_phone, "Office Phone Number:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_office_phone_preview">
+		    		<%= resource.casino.office_phone %>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:mobile_phone, "Mobile Phone Number:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_mobile_phone_preview">
+		    		<%= resource.casino.mobile_phone %>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= f.label(:email, "Email:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_email_preview">
+		    		<%= resource.email %>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= f.label(:password, "Password:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_password_preview">
+		    		<%= resource.password %>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:contact_message, "Message:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_contact_message_preview">
+		    		<%= resource.casino.contact_message %>
+		    	</div>
+		 	</div>
+
+		 	<div class="col-sm-1 pull-right">
+	  			<a href="javascript:goPage(1)" class="btn btn-primary btn-small">Edit</a>
+	  		</div>
+
+		</fieldset>
+
+		<fieldset>
+			<legend>Gaming Amenities</legend>
+		  	<div class="row form-group">
+		  		<%= casino_form.label(:total_table_games, "Total Number of Table Games:", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_total_table_games_preview">
+		    		<%= resource.casino.total_table_games %>
+		    	</div>
+		 	</div>
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:total_slot_machines, "Total Number of Slot Machines", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_total_slot_machines_preview">
+		    		<%= resource.casino.total_slot_machines %>
+		    	</div>
+		 	</div>
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:have_vip_room, "Do you have a VIP Room?", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_have_vip_room_preview">
+		    		<%= resource.casino.have_vip_room %>
+		    	</div>
+		 	</div>
+		 	<div>
+
+			 	<div class="row form-group">
+			  		<%= casino_form.label(:have_vip_lounge, "Do you have a VIP Lounge?", class: "col-sm-3 col-sm-offset-1") %>
+			    	<div class="col-sm-5" id="user_casino_attributes_have_vip_lounge_preview">
+			    		<%= resource.casino.have_vip_lounge %>
+			    	</div>
+			 	</div>
+			 	<div class="row form-group">
+			  		<%= casino_form.label(:have_private_gaming_tables, "Do you have private gaming tables?", class: "col-sm-3 col-sm-offset-1") %>
+			    	<div class="col-sm-5" id="user_casino_attributes_have_private_gaming_tables_preview">
+			    		<%= resource.casino.have_private_gaming_tables %>
+			    	</div>
+			 	</div>
+			 	<div class="row form-group">
+			  		<%= casino_form.label(:how_many_gaming_tables, "How many VIP gaming tables?", class: "col-sm-3 col-sm-offset-1") %>
+			    	<div class="col-sm-5" id="user_casino_attributes_how_many_gaming_tables_preview">
+			    		<%= resource.casino.how_many_gaming_tables %>
+			    	</div>
+			 	</div>
+			 	<div class="row form-group">
+			  		<%= casino_form.label(:how_many_slot_machines, "How many VIP slot machines?", class: "col-sm-3 col-sm-offset-1") %>
+			    	<div class="col-sm-5" id="user_casino_attributes_how_many_slot_machines_preview">
+			    		<%= resource.casino.how_many_slot_machines %>
+			    	</div>
+			 	</div>
+			 </div>
+
+			<div class="row form-group">
+		  		<label class="col-sm-4">Max Bet(Bet Limit):</label>
+		 	</div>
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:max_bet_blackjack, "Blackjack:", class: "col-sm-3 col-sm-offset-1") %>
+		    	
+		    	<div class="col-sm-5">
+		    		$&nbsp;<span  id="user_casino_attributes_max_bet_blackjack_preview"><%= resource.casino.max_bet_blackjack %></span>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:max_bet_baccarat, "Baccarat:", class: "col-sm-3 col-sm-offset-1") %>
+		    	
+		    	<div class="col-sm-5">
+		    		$&nbsp;<span id="user_casino_attributes_max_bet_baccarat_preview"><%= resource.casino.max_bet_baccarat %></span>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:max_bet_roulette, "Roulette:", class: "col-sm-3 col-sm-offset-1") %>
+		    	
+		    	<div class="col-sm-5">
+		    		$&nbsp;<span id="user_casino_attributes_max_bet_roulette_preview"><%= resource.casino.max_bet_roulette %></sapn>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:max_bet_craps, "Craps:", class: "col-sm-3 col-sm-offset-1") %>
+		    	
+		    	<div class="col-sm-5">
+		    		$&nbsp;<span id="user_casino_attributes_max_bet_craps_preview"><%= resource.casino.max_bet_craps %></span>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:have_sports_betting_lounge, "Do you have a sports betting lounge?", class: "col-sm-4") %>
+		    	<div class="col-sm-5" id="user_casino_attributes_have_sports_betting_lounge_preview">
+		    		<%= resource.casino.have_sports_betting_lounge %>
+		    	</div>
+		 	</div>
+
+		 	<div class="row form-group">
+		  		<%= casino_form.label(:betting_limit_on_single_sporting, "What is the betting limit on a single sporting event?", class: "col-sm-4") %>
+		    	
+		    	<div class="col-sm-5">
+		    		$&nbsp;<span id="user_casino_attributes_betting_limit_on_single_sporting_preview"><%= resource.casino.betting_limit_on_single_sporting %></span>
+		    	</div>
+		 	</div>
+
+		 	<div class="col-sm-1 pull-right">
+	  			<a href="javascript:goPage(2)" class="btn btn-primary btn-small">Edit</a>
+	  		</div>
+
+		</fieldset>
+
+		<fieldset>
+			<legend>Casino Images</legend>
+			<div class="form-group">
+				<div class="col-sm-4">
+					<% if resource.casino.casino_image_1? %>
+						<img width="100%" alt="Casino Image 1" class="user_casino_attributes_casino_image_1_preview" src="<%= resource.casino.casino_image_1_url(:thumb) %>" height="200px"/>
+					<% else %>
+						<img width="100%" alt="Casino Image 1" class="user_casino_attributes_casino_image_1_preview" src="/no_image.png" height="200px" />
+					<% end %>
+
+				</div>
+				<div class="col-sm-4">
+					<% if resource.casino.casino_image_1? %>
+						<img width="100%" alt="Casino Image 2" class="user_casino_attributes_casino_image_2_preview" src="<%= resource.casino.casino_image_2_url(:thumb) %>" height="200px" />
+					<% else %>
+						<img width="100%" alt="Casino Image 2" class="user_casino_attributes_casino_image_2_preview" src="/no_image.png" height="200px" />
+					<% end %>
+
+				</div>
+				<div class="col-sm-4">
+					<% if resource.casino.casino_image_1? %>
+						<img width="100%" alt="Casino Image 3" class="user_casino_attributes_casino_image_3_preview" src="<%= resource.casino.casino_image_1_url(:thumb) %>" height="200px" />
+					<% else %>
+						<img width="100%" alt="Casino Image 3" class="user_casino_attributes_casino_image_3_preview" src="/no_image.png" height="200px" />
+					<% end %>
+
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Casino Features</legend>
+			<div class="form-group casino-feature">
+				<div class="img-preview table-cell">
+					<div class="wrapper">
+					<% if resource.casino.feature_image_1? %>
+						<img width="200px" alt="Feature Image 1" class="user_casino_attributes_feature_image_1_preview" src="<%= resource.casino.feature_image_1_url(:thumb) %>" />
+					<% else %>
+						<img width="200px" alt="Feature Image 1" class="user_casino_attributes_feature_image_1_preview" src="/no_image.png" />
+					<% end %>
+					</div>
+				</div>
+				<div class="table-cell full" id="user_casino_attributes_feature_description_1_preview">
+		    	<% if resource.casino.feature_description_1 != '' %>
+		    		<%= resource.casino.feature_description_1 %>
+		    	<% else %>
+		    		Casino Feature Description here
+		    	<% end %>
+		    	</div>
+			</div>
+
+			<div class="form-group casino-feature">
+				
+				<div class="table-cell full" id="user_casino_attributes_feature_description_2_preview">
+		    	<% if resource.casino.feature_description_2 != '' %>
+		    		<%= resource.casino.feature_description_2 %>
+		    	<% else %>
+		    		Casino Feature Description here
+		    	<% end %>
+		    	</div>
+				<div class="img-preview right table-cell">
+					<div class="wrapper">
+					<% if resource.casino.feature_image_2? %>
+						<img width="200px" alt="Feature Image 2" class="user_casino_attributes_feature_image_2_preview" src="<%= resource.casino.feature_image_2_url(:thumb) %>" />
+					<% else %>
+						<img width="200px" alt="Feature Image 2" class="user_casino_attributes_feature_image_2_preview" src="/no_image.png" />
+					<% end %>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group casino-feature">
+				<div class="img-preview table-cell">
+					<div class="wrapper">
+					<% if resource.casino.feature_image_3? %>
+						<img width="200px" alt="Feature Image 3" class="user_casino_attributes_feature_image_3_preview" src="<%= resource.casino.feature_image_3_url(:thumb) %>" />
+					<% else %>
+						<img width="200px" alt="Feature Image 3" class="user_casino_attributes_feature_image_3_preview" src="/no_image.png" />
+					<% end %>
+					</div>
+				</div>
+				<div class="table-cell full" id="user_casino_attributes_feature_description_3_preview">
+				<% if resource.casino.feature_description_3 != '' %>
+		    		<%= resource.casino.feature_description_3 %>
+		    	<% else %>
+		    		Casino Feature Description here
+		    	<% end %>
+		    	</div>
+			</div>
+
+			<div class="col-sm-1 pull-right">
+	  			<a href="javascript:goPage(3)" class="btn btn-primary btn-small">Edit</a>
+	  		</div>
+
+		</fieldset>
+
+		<fieldset>
+			<legend>Subscription</legend>
+			<div class="row form-group">
+		  		
+		    	<div class="col-sm-5" id="user_casino_attributes_subscription_preview">
+		    		Subscription Plan ($<%= number_with_delimiter(resource.casino.subscription) %>/Mo)
+		    	</div>
+		 	</div>
+
+		 	<div class="col-sm-1 pull-right">
+	  			<a href="javascript:goPage(4)" class="btn btn-primary btn-small">Edit</a>
+	  		</div>
+
+		</fieldset>
+	<% if resource.id %>
+		<div class="row form-group">
+	      	<%= f.label :current_password, class: "col-sm-2 text-right" %>
+	      	<%= f.password_field :current_password, autocomplete: "off", class: "col-sm-5" %>
+	    </div>
+	<% end %>
+	</div>
+
+	<div class="text-center">
+		<%= f.submit "Save & Submit", class: "btn btn-primary btn-lg" %>
+	</div>
+<% end %>

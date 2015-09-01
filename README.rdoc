@@ -1,0 +1,29 @@
+== Whale Project
+
+Where gamblers let casinos compete for their business.
+
+Whale Register is a website where gamblers (“players’) submit bids to casinos who compete for the player's business.  Players create bids that contain the amount of money they plan to wager during their visit.  The bids also contain the player’s request for complimentary services (“comps”).  These requested comps can include free accommodations, dining, transportation, and even gambling loss rebates.
+
+The site is currently in beta. User currently see a landing page, where they can provide their email address to be notified when the product launches.
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+
+
+Please feel free to use a different markup language if you do not plan to run
+<tt>rake doc:app</tt>.

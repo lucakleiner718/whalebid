@@ -1,0 +1,41 @@
+// Place all the styles related to the Bids controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.market-select-wrapper{
+	.select-option{
+		font-size: 20px;
+		margin-bottom: 10px;
+	}
+
+	.select-intro{
+		margin-bottom: 20px;
+	}
+}
+
+#bid_bid_fee_reimbursement_text_preview{
+	margin-left: 30px;
+}
+
+.preference-box{
+	border: 1px solid #428bca;
+	border-radius: 5px;
+	min-height: 50px;
+	padding: 5px;
+}
+
+#new-offer-cover{
+	position: absolute; 
+	width: 100%; height: 
+	100%; background-color: rgba(0,0,0, 0.5);
+	z-index: 99999;
+}
+.my-border {
+	border: 1px solid #428bca;
+}
+.my-right-border {
+	border-right: 1px solid #428bca;
+}
+.my-margin-top {
+	margin-top: 15px;	
+}

@@ -1,0 +1,268 @@
+<div class="container">
+
+  <div class="row form-group">
+    <div class="col-sm-3">
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      <%= link_to "<< Back to List", history_bids_path, class: "btn btn-primary btn-sm" %>
+
+    </div>
+    <div class="col-sm-6 text-center">
+      <h1>
+        Show Bid Details<br/>
+        for<br/>
+        <b><%= @bid.bid_name %></b>
+      </h1>
+    </div>
+    <div class="col-sm-3">
+      <div class="pull-right">
+      <% if @bid.status == "Active" or @bid.status == "" %>
+        &nbsp;<br/>
+        &nbsp;<br/>
+        This bid has offers<br/>
+        awaiting your response.<br/>&nbsp;<br/>
+        <%= link_to "Manage Offers", current_bids_path, class: "btn btn-primary btn-sm full" %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+
+  <fieldset>
+
+    <div class="row">
+      <label class="col-sm-5">Bid Status:</label>
+      <label class="col-sm-7">
+        <%= @bid.status %>
+      </label>
+    </div>
+
+    <div class="row form-group">
+      <label class="col-sm-5">Offer Response:</label>
+      <label class="col-sm-7">
+        Awaiting Response&nbsp;&nbsp;<%= link_to "Manage Offers", current_bids_path, class: "btn btn-primary btn-sm" %>
+      </label>
+     
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Bid Reference Number:</label>
+      <label class="col-sm-7"><%= @bid.reference_number %></label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Bid Name:</label>
+      <label class="col-sm-7"><%= @bid.bid_name %></label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Bid Submission Date:</label>
+      <label class="col-sm-7"><%= @bid.created_at.strftime("%B %d, %Y") %></label>
+    </div>
+
+    <div class="row form-group">
+      <label class="col-sm-5">Bid close Date:</label>
+      <label class="col-sm-7">
+        <%= @bid.close_at.strftime("%B %d, %Y") %>&nbsp;
+        <% if @bid.close_at >= Date.today %>
+          (<%= Date.parse(@bid.close_at.strftime("%B %d, %Y")).mjd-Date.today.mjd %> days from now)
+        <% end %>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Wager Level for This Bid:</label>
+      <label class="col-sm-7"><%= @bid.wager_level %>(<%= @bid.player_category %>)</label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Player's Bid Fee:</label>
+      <label class="col-sm-7">$<%= number_with_delimiter(@bid.bid_fee) %></label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Request for bid fee reimbursement:</label>
+      <label class="col-sm-7">
+        <%= (@bid.bid_fee_reimbursement ? "Yes" : "No") %>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Type of Bid:</label>
+      <label class="col-sm-7">
+        <%= (@bid.by_market ? "Market" : "Select") %>
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <div class="row">
+      <label class="col-sm-5">Offers Received:</label>
+      <label class="col-sm-7"><%= @bid.offers.where("offer_status is null or offer_status!=?","Declined by casino").count %></label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Offers Declined:</label>
+      <label class="col-sm-7">
+        <%= @bid.offers.where("offer_status=?", "Declined").count %>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Casino Offer Accepted:</label>
+      <label class="col-sm-7">
+        <% if @bid.offers.where("offer_status is null or offer_status!=?","Declined by casino").count == 0 %>
+          No offers
+        <% elsif @bid.offers.where("offer_status=?", "Accepted").count == 0 %>
+          Offers still pending
+        <% end %>
+        <% if @bid.status == "Active" %>
+          &nbsp;&nbsp;
+          <%= link_to "Manage Offers", current_bids_path, class: "btn btn-primary btn-sm" %>
+        <% end %>
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <div class="row">
+      <label class="col-sm-5">Arrival Date:</label>
+      <label class="col-sm-7"><%= @bid.arrival_date.strftime("%A, %B %d, %Y") %></label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Departure Date:</label>
+      <label class="col-sm-7"><%= @bid.departure_date.strftime("%A, %B %d, %Y") %></label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Number of Adults:</label>
+      <label class="col-sm-7">
+        <%= @bid.adults %>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="col-sm-5">Number of Children:</label>
+      <label class="col-sm-7">
+        <%= @bid.children %>
+      </label>
+    </div>
+
+  </fieldset>
+
+
+  <div class="row">
+    <label class="col-sm-4">Accomodations:</label>
+    <div class="col-sm-8 text-right">
+      Level of importance: 
+      <span>
+        <%= @bid.preference_accomodations_level %>
+      </span>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-12">
+      <div class="preference-box">
+        <%= @bid.preference_accomodations %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="col-sm-4">Dining:</label>
+    <div class="col-sm-8 text-right">
+      Level of importance: 
+      <span>
+        <%= @bid.preference_dining_level %>
+      </span>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-12">
+      <div class="preference-box">
+        <%= @bid.preference_dining %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="col-sm-4">Entertainment & Recreation:</label>
+    <div class="col-sm-8 text-right">
+      Level of importance: 
+      <span>
+        <%= @bid.preference_entertainment_level %>
+      </span>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-12">
+      <div class="preference-box">
+        <%= @bid.preference_entertainment %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="col-sm-4">Transportation:</label>
+    <div class="col-sm-8 text-right">
+      Level of importance: 
+      <span>
+        <%= @bid.preference_transportation_level %>
+      </span>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-12">
+      <div class="preference-box">
+        <%= @bid.preference_transportation %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="col-sm-4">Gaming:</label>
+    <div class="col-sm-8 text-right">
+      Level of importance: 
+      <span>
+        <%= @bid.preference_gaming_level %>
+      </span>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-12">
+      <div class="preference-box">
+        <%= @bid.preference_gaming %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="col-sm-4">Other Preferences:</label>
+    <div class="col-sm-8 text-right">
+      Level of importance: 
+      <span>
+        <%= @bid.preference_other_level %>
+      </span>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-12">
+      <div class="preference-box">
+        <%= @bid.preference_other %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group text-center">
+    <%= link_to "<< Back to List", history_bids_path, class: "btn btn-primary btn-lg" %>
+  </div>
+</div>

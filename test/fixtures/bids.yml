@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  market: MyString
+  casino1: MyString
+  casino2: MyString
+  casino3: MyString
+  casino4: MyString
+  casino5: MyString
+  arrival_date: 2014-06-08
+  departure_date: 2014-06-08
+  adults: 1
+  children: 1
+  wager_level: MyString
+
+two:
+  id: 2
+  market: MyString
+  casino1: MyString
+  casino2: MyString
+  casino3: MyString
+  casino4: MyString
+  casino5: MyString
+  arrival_date: 2014-06-08
+  departure_date: 2014-06-08
+  adults: 1
+  children: 1
+  wager_level: MyString

@@ -1,0 +1,19 @@
+<!-- provide flash notice if needed -->
+
+<% if flash[:notice_type].blank? %>
+	<% flash[:notice_type] = "success" %>
+<% end %>
+<% if !flash[:notice].blank? %>
+  <div class="alert alert-<%= flash[:notice_type] %>">
+  	<div class="pull-left">
+    	<%= flash[:notice].html_safe %>
+    </div>
+    <div class="pull-right"></div>
+    <div class="clear"></div>
+  </div>
+<% end %>
+
+<%
+	flash[:notice_type] = ""
+	flash[:notice]  = ""
+%>

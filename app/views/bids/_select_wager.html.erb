@@ -1,0 +1,47 @@
+
+<!--Create table for user to select the amount they plan to wager during their visit-->
+
+<table class="table wager-level table-bordered table-hover">
+  <tr>
+		<th>Select</th>
+		<th>Amount I Plan to Wager During My Visit</th>
+		<th>Player Category</th>
+		<th>Bid Fee</th>
+		<th>Typical Perks</th>
+  </tr>
+	<tr>
+		<td><%= f.radio_button(:wager_level, '$10,000 - $50,000') %></td>
+		<td>$10,000 - $50,000</td>
+		<td>Dolphin</td>
+		<td>None</td>
+		<td><%= link_to "Show Perks"%></td>
+	</tr>
+	<tr>
+		<td><%= f.radio_button(:wager_level, '$50,001 - $200,000') %></td>
+		<td>$50,001 - $200,000</td>
+		<td>Orca</td>
+		<td>$1,000</td>
+		<td><%= link_to "Show Perks"%></td>
+	</tr>
+	<tr>
+		<td><%= f.radio_button(:wager_level, '$200,001 - $500,000') %></td>
+		<td>$200,001 - $500,000</td>
+		<td>Gray Whale</td>
+		<td>$5,000</td>
+		<td><%= link_to "Show Perks"%></td>
+	</tr>
+	<tr>
+		<td><%= f.radio_button(:wager_level, '$500,001 - $1,000,000') %></td>
+		<td>$500,001 - $1,000,000</td>
+		<td>Fin Whale</td>
+		<td>$10,000</td>
+		<td><%= link_to "Show Perks"%></td>
+	</tr>
+	<tr>
+		<td><%= f.radio_button(:wager_level, 'More than $1,000,000') %></td>
+		<td>More than $1,000,000</td>
+		<td>Blue Whale</td>
+		<td>$25,000</td>
+		<td><%= link_to "Show Perks"%></td>
+	</tr>						       
+</table>

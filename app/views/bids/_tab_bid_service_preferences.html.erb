@@ -1,0 +1,121 @@
+<div class="well">
+
+	<div class="form-group">
+		<div class="col-sm-8">
+			<div class="row form-group">
+				<label class="col-sm-6">Player Category:</label>
+				<label class="col-sm-6" id="bid_player_category_preview"></label>
+			</div>
+			<div class="row form-group">
+				<label class="col-sm-6">Amout you will wager during your visit:</label>
+				<label class="col-sm-6" id="bid_wager_level_preview"></label>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<br />
+			<a href="#" class="btn btn-primary show-typical-perks-link">Show Typical Perks</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<fieldset>
+		<div class="form-group">
+			It's time to get creative. Think of things you would like the Casino to provide for you in exchange for your gambling spend. The higher your gambling budget, the more extravagant your request should be. You do not need to complete these fields to create your bid, but doing so will help ensure the Casino is responding with an offer that addresses your desires.
+		</div>
+	</fieldset>
+
+	<div class="row form group">
+		<div class="col-sm-12">Accomodations:</div>
+		<div class="col-sm-8">
+			<%= f.text_area(:preference_accomodations, placeholder: "Tell us your preferences for accomodations. Describe the room you would like the Casino to provide to you in exchange for your gambling spend.", class: "full", rows: "5") %>
+		</div>
+		<div class="col-sm-4">
+			<%= f.select :preference_accomodations_level,
+	  					['Very important',
+	  					'Somewhat important',
+	  					'Just a little bit important'], 
+	  					{:prompt => "How important is this to you?"}, 
+	  					{:class => "form-control"} %>
+		</div>
+	</div>
+
+	<div class="row form group">
+		<div class="col-sm-12">Dining:</div>
+		<div class="col-sm-8">
+			<%= f.text_area(:preference_dining, placeholder: "Tell us your preferences for dining. What is your favorite type of food? What is your favorite wine?", class: "full", rows: "5") %>
+		</div>
+		<div class="col-sm-4">
+			<%= f.select :preference_dining_level,
+	  					['Very important',
+	  					'Somewhat important',
+	  					'Just a little bit important'], 
+	  					{:prompt => "How important is this to you?"}, 
+	  					{:class => "form-control"} %>
+		</div>
+	</div>
+
+	<div class="row form group">
+		<div class="col-sm-12">Entertainment & Recreation:</div>
+		<div class="col-sm-8">
+			<%= f.text_area(:preference_entertainment, placeholder: "Tell us your preferences for entertainment and recreation. Do you enjoy attending concerts or shows? Would you like to play golf or go on a tour of the area?", class: "full", rows: "5") %>
+		</div>
+		<div class="col-sm-4">
+			<%= f.select :preference_entertainment_level,
+	  					['Very important',
+	  					'Somewhat important',
+	  					'Just a little bit important'], 
+	  					{:prompt => "How important is this to you?"}, 
+	  					{:class => "form-control"} %>
+		</div>
+	</div>
+
+	<div class="row form group">
+		<div class="col-sm-12">Transportation:</div>
+		<div class="col-sm-8">
+			<%= f.text_area(:preference_transportation, placeholder: "Tell us your preferences for transportation. Would you like to the Casino to arrange and pay for your airfare? Do you want limousine service?", class: "full", rows: "5") %>
+		</div>
+		<div class="col-sm-4">
+			<%= f.select :preference_transportation_level,
+	  					['Very important',
+	  					'Somewhat important',
+	  					'Just a little bit important'], 
+	  					{:prompt => "How important is this to you?"}, 
+	  					{:class => "form-control"} %>
+		</div>
+	</div>
+
+	<div class="row form group">
+		<div class="col-sm-12">Gaming:</div>
+		<div class="col-sm-8">
+			<%= f.text_area(:preference_gaming, placeholder: "Tell us your preferences for gaming. What type of Casino games do you like to play? Would you like to have a private blackjack or baccarat table? How much would you like to play per hand?", class: "full", rows: "5") %>
+		</div>
+		<div class="col-sm-4">
+			<%= f.select :preference_gaming_level,
+	  					['Very important',
+	  					'Somewhat important',
+	  					'Just a little bit important'], 
+	  					{:prompt => "How important is this to you?"}, 
+	  					{:class => "form-control"} %>
+		</div>
+	</div>
+
+	<div class="row form group">
+		<div class="col-sm-12">Other preferences:</div>
+		<div class="col-sm-8">
+			<%= f.text_area(:preference_other, placeholder: "Tell us your preferences for other preferences.", class: "full", rows: "5") %>
+		</div>
+		<div class="col-sm-4">
+			<%= f.select :preference_other_level,
+	  					['Very important',
+	  					'Somewhat important',
+	  					'Just a little bit important'], 
+	  					{:prompt => "How important is this to you?"}, 
+	  					{:class => "form-control"} %>
+		</div>
+	</div>
+
+</div>
+<div class="text-center">
+	<a href="javascript:goPage(1)" class="btn btn-primary btn-lg">Previous Page</a>
+	<a href="javascript:goPage(3)" class="btn btn-primary btn-lg">Next Page</a>
+</div>

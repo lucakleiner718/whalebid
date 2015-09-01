@@ -1,0 +1,120 @@
+<%= f.fields_for :casino, resource.casino do |casino_form| %>	
+	<div class="well">
+		<fieldset>
+			<legend>Casino Images</legend>
+			<div class="form-group">
+				<div class="col-sm-4">
+					<% if resource.casino.casino_image_1? %>
+						<img width="100%" alt="Casino Image 1" class="user_casino_attributes_casino_image_1_preview" src="<%= resource.casino.casino_image_1_url(:thumb) %>" height="200px"/>
+					<% else %>
+						<img width="100%" alt="Casino Image 1" class="user_casino_attributes_casino_image_1_preview" src="/no_image.png" height="200px" />
+					<% end %>
+
+					<div class="form-group casino-feature">
+						<%= casino_form.file_field(:casino_image_1, accept: "image/*") %>
+						<%= casino_form.hidden_field :casino_image_1_cache %>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<% if resource.casino.casino_image_1? %>
+						<img width="100%" alt="Casino Image 2" class="user_casino_attributes_casino_image_2_preview" src="<%= resource.casino.casino_image_2_url(:thumb) %>" height="200px" />
+					<% else %>
+						<img width="100%" alt="Casino Image 2" class="user_casino_attributes_casino_image_2_preview" src="/no_image.png" height="200px" />
+					<% end %>
+					<div class="form-group casino-feature">
+						<%= casino_form.file_field(:casino_image_2, accept: "image/*") %>
+						<%= casino_form.hidden_field :casino_image_2_cache %>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<% if resource.casino.casino_image_1? %>
+						<img width="100%" alt="Casino Image 3" class="user_casino_attributes_casino_image_3_preview" src="<%= resource.casino.casino_image_1_url(:thumb) %>" height="200px" />
+					<% else %>
+						<img width="100%" alt="Casino Image 3" class="user_casino_attributes_casino_image_3_preview" src="/no_image.png" height="200px" />
+					<% end %>
+					<div class="form-group casino-feature">
+						<%= casino_form.file_field(:casino_image_3, accept: "image/*") %>
+						<%= casino_form.hidden_field :casino_image_3_cache %>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>Casino Feature #1</legend>
+			<div class="form-group casino-feature">
+				<div class="img-preview table-cell">
+					<div class="wrapper">
+					<% if resource.casino.feature_image_1? %>
+						<img width="200px" alt="Feature Image 1" class="user_casino_attributes_feature_image_1_preview" src="<%= resource.casino.feature_image_1_url(:thumb) %>" />
+					<% else %>
+						<img width="200px" alt="Feature Image 1" class="user_casino_attributes_feature_image_1_preview" src="/no_image.png" />
+					<% end %>
+
+					</div>
+				</div>
+				<div class="description table-cell full">
+					<%= casino_form.text_area(:feature_description_1, placeholder: "Enter the feature description #1 here") %>
+				</div>
+			</div>
+			<div class="form-group">
+				<%= casino_form.file_field(:feature_image_1, accept: "image/*") %>
+				<%= casino_form.hidden_field :feature_image_1_cache %>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Casino Feature #2</legend>
+			<div class="form-group casino-feature">
+				
+				<div class="description table-cell full">
+					<%= casino_form.text_area(:feature_description_2, placeholder: "Enter the feature description #2 here") %>
+				</div>
+				<div class="img-preview right table-cell">
+					<div class="wrapper">
+					<% if resource.casino.feature_image_2? %>
+						<img width="200px" alt="Feature Image 2" class="user_casino_attributes_feature_image_2_preview" src="<%= resource.casino.feature_image_2_url(:thumb) %>" />
+					<% else %>
+						<img width="200px" alt="Feature Image 2" class="user_casino_attributes_feature_image_2_preview" src="/no_image.png" />
+					<% end %>
+					</div>
+				</div>
+
+				
+			</div>
+
+			<div class="form-group" align="right">
+				<%= casino_form.file_field(:feature_image_2, accept: "image/*") %>
+
+				<%= casino_form.hidden_field :feature_image_2_cache %>
+			</div>
+			
+		</fieldset>
+		<fieldset>
+			<legend>Casino Feature #3</legend>
+			<div class="form-group casino-feature">
+				<div class="img-preview table-cell">
+					<div class="wrapper">
+					<% if resource.casino.feature_image_3? %>
+						<img width="200px" alt="Feature Image 3" class="user_casino_attributes_feature_image_3_preview" src="<%= resource.casino.feature_image_3_url(:thumb) %>" />
+					<% else %>
+						<img width="200px" alt="Feature Image 3" class="user_casino_attributes_feature_image_3_preview" src="/no_image.png" />
+					<% end %>
+					</div>
+				</div>
+				<div class="description table-cell full">
+					<%= casino_form.text_area(:feature_description_3, placeholder: "Enter the feature description #3 here") %>
+				</div>
+			</div>
+			<div class="form-group casino-feature">
+				<%= casino_form.file_field(:feature_image_3, accept: "image/*") %>
+				<%= casino_form.hidden_field :feature_image_3_cache %>
+			</div>
+		</fieldset>
+
+	</div>
+
+	<div class="text-center">
+		<a href="javascript:goPage(2)" class="btn btn-primary btn-lg">Previous Page</a>
+		<a href="javascript:goPage(4)" class="btn btn-primary btn-lg">Next Page</a>
+	</div>
+<% end %>

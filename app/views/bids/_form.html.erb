@@ -1,0 +1,57 @@
+<%= form_for @bid, url: {action: "create"} do |f| %>
+ 	<% if @bid.errors.any? %>
+ 	<div id="error_explanation">
+ 		<h2><%= @bid.errors.messages.count %> errors prohibited this bid from being saved:</h2>
+	 	<ul>
+	 	<% @bid.errors.messages.each do |field, messages| %>
+	 		<% messages.each do |message| %>
+	 			<li><%= field.to_s.gsub("_", " ").humanize %> <%= message %></li>
+	 		<% end %>
+	 	<% end %>
+	 	</ul>
+	</div>
+	<% end %>
+
+	<ul class="nav nav-tabs" role="tablist" id="casinoTab">
+	  	<li class="active"><a href="#main_info" role="tab" data-toggle="tab">1. Main Info</a></li>
+	  	<li><a href="#wager_level" role="tab" data-toggle="tab">2. Wager Level</a></li>
+	  	<li><a href="#service_preferences" role="tab" data-toggle="tab">3. Service Preferences</a></li>
+	  	<li><a href="#review" role="tab" data-toggle="tab">4. Review & Submit</a></li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content" id="casinoTabContent">
+		<!-- start of main info tab content -->
+	  	<div class="tab-pane active" id="main_info">
+	  		<div class="panel">
+	  			<%= render(partial: "tab_bid_main_info", locals: {f: f}) %>
+	  		</div>
+	  	</div>
+	  	<!-- end of main info tab content -->
+
+	  	<!-- start of main info tab content -->
+	  	<div class="tab-pane" id="wager_level">
+	  		<div class="panel">
+	  			<%= render(partial: "tab_bid_wager_level", locals: {f: f}) %>
+	  		</div>
+	  	</div>
+	  	<!-- end of main info tab content -->
+
+	  	<!-- start of main info tab content -->
+	  	<div class="tab-pane" id="service_preferences">
+	  		<div class="panel">
+	  			<%= render(partial: "tab_bid_service_preferences", locals: {f: f}) %>
+	  		</div>
+	  	</div>
+	  	<!-- end of main info tab content -->
+
+	  	<!-- start of main info tab content -->
+	  	<div class="tab-pane" id="review">
+	  		<div class="panel">
+	  			<%= render(partial: "tab_bid_review", locals: {f: f}) %>
+	  		</div>
+	  	</div>
+	  	<!-- end of main info tab content -->
+	</div>
+
+<% end %>

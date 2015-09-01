@@ -1,0 +1,21 @@
+
+<div class="container">
+  </br>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+    <%= devise_error_messages! %>
+
+    <% if (resource.casino) %>
+      <input type="hidden" name="type" value="casino">
+      <%= render(partial: "edit_casino", locals: {f: f}) %>
+    <% elsif %>
+      <input type="hidden" name="type" value="player">
+      <%= render(partial: "edit_player", locals: {f: f}) %>
+    <% end %>
+
+  <% end %>
+</div>
+

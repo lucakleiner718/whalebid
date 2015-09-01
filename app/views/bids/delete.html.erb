@@ -1,0 +1,24 @@
+
+<div class="container">
+
+	</br>
+
+	<%= link_to("<< Back to List of Bids", {action: 'index'}, class: 'btn btn-primary') %></br>
+	</br>
+	
+	<h2>Delete Bid</h2></br>
+
+		<%= form_for(:bid, url: {action: 'destroy'}, html: {:method => :delete}) do |f| %>
+	
+	  	<p>Are you sure you want to permanently delete this bid?</p>
+
+	  	<p class="reference-name"><%= @bid.market %></p>
+	
+			</br>
+
+		  <%= submit_tag("Yes, delete this bid!", class: "btn btn-primary") %></br>
+		</br>
+
+		<% end %>
+
+</div><!--Close container-->

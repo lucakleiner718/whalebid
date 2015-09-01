@@ -1,0 +1,81 @@
+<%= form_for @offer, url: {controller: "offers", action: "create"} do |f| %>
+<div class="row">
+  <div class="col-sm-12">
+      <%= f.hidden_field(:bid_id, value: @bid.id) %>
+      <%= f.hidden_field(:casino_id, value: current_user.casino.id) %>
+   	<div class="panel panel-primary" style="position:relative;">
+         <div style="" id="new-offer-cover"></div>
+     	   <div class="panel-heading text-center">
+     		  Create and Send Offer
+   		</div>
+
+   		<div class="well">
+   			<div class="row form-group">
+   				<%= f.label(:reimbursement_bid_fee, "Do you agree to reimbursed the bid fee from the Player's losses?", class: "col-sm-6") %>
+   				<div class="col-sm-6">
+   					<%= f.radio_button(:reimbursement_bid_fee, true, checked: @offer.reimbursement_bid_fee != false) %> Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   					<%= f.radio_button(:reimbursement_bid_fee, false, checked: @offer.reimbursement_bid_fee == false) %> No
+   				</div>
+   			</div>
+
+   			<div class="row form-group">
+   				<%= f.label(:agree_player_requests, "Are you including the Player's requests in this offer?", class: "col-sm-6") %>
+   				<div class="col-sm-6">
+   					<%= f.radio_button(:agree_player_requests, "All", checked: (@offer.agree_player_requests != "Some" or @offer.agree_player_requests != "None")) %> Yes, all of the requests are included in this offer<br/>
+   					<%= f.radio_button(:agree_player_requests, "Some", checked: @offer.agree_player_requests == "Some") %> No, some of the requests are included in this offer<br/>
+   					<%= f.radio_button(:agree_player_requests, "Some", checked: @offer.agree_player_requests == "None") %> No, none of the requests are included in this offer<br/>
+   				</div>
+   			</div>
+
+   			<div class="row form-group">
+   				<%= f.label(:offer_additional_perks, "Are you offering additional perks or benefits to the Player?", class: "col-sm-6") %>
+   				<div class="col-sm-6">
+   					<%= f.radio_button(:offer_additional_perks, true, checked: @offer.offer_additional_perks != false) %> Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   					<%= f.radio_button(:offer_additional_perks, false, checked: @offer.offer_additional_perks == false) %> No
+   				</div>
+   			</div>
+
+   			<div class="row form-group">
+   				<%= f.label(:expiration_date, "When will this offer expire?", class: "col-sm-6") %>
+   				<div class="col-sm-6">
+   					<%= f.hidden_field(:expiration_date) %> 
+   					<%= f.text_field(:expiration_date, id: "offer_expiration_date_show", name: "offer_expiration_date_show", readonly: "readonly", class: "col-sm-3") %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   					<%= f.select(:expiration_time, ["1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"]) %>
+   				</div>
+   			</div>
+   			<div class="row form-group">
+               <label class="col-sm-4">Message to the Player:</label>
+               <div class="col-sm-8">
+                  <%= f.file_field :attach_file_to_message %>
+                  <%= f.hidden_field :attach_file_to_message_cache %>
+               </div>
+   				<div class="col-sm-12">
+   					<%= f.text_area(:message_to_player, rows: 5, class: "full wysihtml5") %>
+   				</div>
+   			</div>
+
+
+            <div class="row form-group">
+               <label class="col-sm-4">
+                  Conditions to your Offer:
+               </label>
+               <div class="col-sm-8">
+                  <%= f.file_field :attach_file_to_offer %>
+                  <%= f.hidden_field :attach_file_to_offer_cache %>
+               </div>
+               <div class="col-sm-12">
+                  <%= f.text_area(:offer_comment, rows: 5, class: "full wysihtml5") %>
+               </div>
+            </div>
+
+            <div class="form-group text-center">
+               <%= f.submit "Save and Send Offer to Player", class: "btn btn-primary btn-lg" %>
+            </div>
+   			
+   		</div>
+   	</div>
+   </div>
+</div>
+
+
+<% end %>

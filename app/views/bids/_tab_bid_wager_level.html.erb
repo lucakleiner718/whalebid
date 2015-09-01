@@ -1,0 +1,80 @@
+<div class="well">
+
+	<div class="row form-group">
+		
+		<!--Create table for user to select the amount they plan to wager during their visit-->
+		<%= f.hidden_field :player_category %>
+		<%= f.hidden_field :bid_fee %>
+		<table class="table wager-level table-bordered table-hover">
+		  	<tr>
+				<th>Select</th>
+				<th>Amount I Plan to Wager During My Visit</th>
+				<th>Player Category</th>
+				<th>Bid Fee</th>
+				<th>Typical Perks</th>
+		  	</tr>
+			<tr>
+				<td><%= f.radio_button(:wager_level, '$10,000 - $50,000', checked: true, data: { player_category: 'Dolphin', bid_fee: 195 }) %></td>
+				<td>$10,000 - $50,000</td>
+				<td>Dolphin</td>
+				<td>$195</td>
+				<td><%= link_to "Show Perks", "#", class: "show-perks-link", data: {wager_level: "$10,000 - $50,000", player_category: "Dolphin"} %></td>
+			</tr>
+			<tr>
+				<td><%= f.radio_button(:wager_level, '$50,001 - $200,000', data: { player_category: 'Orca', bid_fee: 995 }) %></td>
+				<td>$50,001 - $200,000</td>
+				<td>Orca</td>
+				<td>$995</td>
+				<td><%= link_to "Show Perks", "#", class: "show-perks-link", data: {wager_level: "$50,001 - $200,000", player_category: "Orca"} %></td>
+			</tr>
+			<tr>
+				<td><%= f.radio_button(:wager_level, '$200,001 - $500,000', data: { player_category: 'Gray Whale', bid_fee: 3995 }) %></td>
+				<td>$200,001 - $500,000</td>
+				<td>Gray Whale</td>
+				<td>$3,995</td>
+				<td><%= link_to "Show Perks", "#", class: "show-perks-link", data: {wager_level: "$200,001 - $500,000", player_category: "Gray Whale"} %></td>
+			</tr>
+			<tr>
+				<td><%= f.radio_button(:wager_level, '$500,001 - $1,000,000', data: { player_category: 'Fin Whale', bid_fee: 9995 }) %></td>
+				<td>$500,001 - $1,000,000</td>
+				<td>Fin Whale</td>
+				<td>$9,995</td>
+				<td><%= link_to "Show Perks", "#", class: "show-perks-link", data: {wager_level: "$500,001 - $1,000,000", player_category: "Fin Whale"} %></td>
+			</tr>
+			<tr>
+				<td><%= f.radio_button(:wager_level, 'More than $1,000,000', data: { player_category: 'Blue Whale', bid_fee: 19995 }) %></td>
+				<td>More than $1,000,000</td>
+				<td>Blue Whale</td>
+				<td>$19,995</td>
+				<td><%= link_to "Show Perks", "#", class: "show-perks-link", data: {wager_level: "More than $1,000,000", player_category: "Blue Whale"} %></td>
+			</tr>						       
+		</table>
+	</div>
+
+	<div class="form-group reimpursement">
+		<div class="table-cell">
+			<%= f.check_box(:bid_fee_reimbursement, {checked: true }, "1") %>
+		</div>
+		<div class="table-cell">
+			Yes, I would like my bid fee to be reimbursed by the Casino. I understand that my bid fee will only be reimbursed if during my visit I have total gambling losses greater than my bid fee, and only if I have wagered the amount I have promised to wager during my stay.	
+		</div>
+	</div>
+
+	<div class="form-group frequent-questions">
+		<h5>Frequent Questions</h5>
+		<div>
+			Why do I have to pay a bid fee?<br />
+			Paying a bid free provides evidence to the casino that you are serious. The higher your planned gambling spend, the higher your fee. Before making you a offer for free services, the Casino wants to be sure you have the finacial means to wager the amount you are claiming.<br/><br/>
+		</div>
+
+		<div>
+			Do I have to wager the amount I claim I will wager?<br />
+			Yes, you should always have a budget prior to any casino visit. Your bid is a statement to the Casino that you intend to wager a certain amount during your visit. If you are uncertain you will be able to meet your wager level, then consider reducing your wager level to an amount you will be sure to spend.
+		</div>
+	</div>
+
+</div>
+<div class="text-center">
+	<a href="javascript:goPage(0)" class="btn btn-primary btn-lg">Previous Page</a>
+	<a href="javascript:goPage(2)" class="btn btn-primary btn-lg">Next Page</a>
+</div>

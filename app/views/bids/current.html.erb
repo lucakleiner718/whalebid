@@ -1,0 +1,295 @@
+<div class="well col-sm-12">
+	<h1 class="text-center">Casino Offers for <%= @bid.bid_name %></h1>
+	<div class="form-group">
+		<div class="pull-left">
+			&nbsp;<br/>
+			&nbsp;<br/>
+			<%= link_to "Show Bid Details", bid_path(@bid.id), class: "btn btn-primary" %>
+		</div>
+		<div class="pull-right">
+			Decline all casino offers<br/>
+			and close this bid?<br/>
+			<%= link_to "Cancel Bid", cancel_bid_path(@bid.id), class: "btn btn-primary btn-cancel full" %>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<!-- start of open player bids -->
+
+    <div class="col-sm-12 my-border">
+
+      	<div class="col-sm-6 my-right-border">
+			<div class="row form-group my-margin-top">
+				<label class="col-sm-6">Bid reference number:</label>
+				<label class="col-sm-6"><%= @bid.reference_number %></label>
+			</div>
+
+			<div class="row form-group">
+				<label class="col-sm-6">Player user name:</label>
+				<label class="col-sm-6"><%= @bid.user.player.username %></label>
+			</div>
+
+			<div class="row form-group">
+				<label class="col-sm-6">Wager level for this bid:</label>
+				<label class="col-sm-6"><%= @bid.wager_level %> ( <%= @bid.player_category %>)</label>
+			</div>
+
+			<div class="row form-group">
+				<label class="col-sm-6">Player's bid fee:</label>
+				<label class="col-sm-6"><%= @bid.bid_fee %></label>
+			</div>
+			<div class="row form-group">
+				<label class="col-sm-6">Bid fee reimbursement:</label>
+				<label class="col-sm-6"><%= @bid.bid_fee_reimbursement ? 'Yes' : 'No' %></label>
+			</div>
+			<div class="row form-group">
+				<label class="col-sm-6">Type of bid:</label>
+				<label class="col-sm-6"><%= @bid.by_market ? 'Market(' + @bid.market + ')' : 'Select' %></label>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="row form-group my-margin-top">
+				<label class="col-sm-6">Bid creation date:</label>
+				<label class="col-sm-6"><%= @bid.created_at.strftime("%B %d, %Y") %></label>
+			</div>
+
+			<div class="row form-group">
+				<label class="col-sm-6">Bid close date:</label>
+				<label class="col-sm-6"><%= @bid.close_at.strftime("%B %d, %Y") %></label>
+			</div>
+
+			<div class="row form-group">
+				<label class="col-sm-6">Number of casinos targeted:</label>
+				<label class="col-sm-6"><%= @bid.casinos.count %></label>
+			</div>
+
+			<div class="row form-group">
+				<label class="col-sm-6">Number of casino offers received:</label>
+				<label class="col-sm-6"><%= @bid.offers.where("offer_status is null or offer_status!=?","Declined by casino").count %></label>
+			</div>
+			<div class="row form-group">
+				<label class="col-sm-6">Number of declines:</label>
+				<label class="col-sm-6"><%= @bid.offers.where('offer_status=?','Declined').count %></label>
+			</div>
+			<div class="row form-group">
+				<label class="col-sm-6">Number of casino offers pending:</label>
+				<label class="col-sm-6"><%= @bid.casinos.count - @bid.offers.where("offer_status is null or offer_status!=?","Declined by casino").count - @bid.offers.where('offer_status=?','Declined').count%></label>
+			</div>
+		</div>
+     	
+    </div>
+
+    <div class="col-sm-12 my-margin-top">
+		<div class="panel panel-primary bordered-table-container">
+			<div class="panel-heading">
+	        	<h3 class="panel-title text-center">Casino Offers Awaiting Your Response</h3>
+	      	</div>
+			<div class="row form-group">
+				<div class="col-sm-12">
+					<table class="table offers-table table-bordered table-hover">
+						<thead>
+						  	<tr>
+								<th>Offer Number</th>
+								<th>Casino Name</th>
+								<th>Offer Date</th>
+								<th>Expiration Date</th>
+								<th>Reimburse Bid Fee</th>
+								<th>Offer Status</th>
+								<th>Action</th>
+						  	</tr>
+						</thead>
+
+						<tbody>
+						<% @bid.offers.where('offer_status is null or (offer_status != ? and offer_status != ?)', 'Declined by casino', 'Declined').each do |offer| %>
+							<tr>
+								<td><%= offer.reference_number %></td>
+								<td><%= offer.casino.casino_name %></td>
+								<td><%= offer.created_at.strftime("%d/%m/%Y") %></td>
+								<td><%= offer.expiration_date.strftime("%d/%m/%Y") %></td>
+								<td><%= offer.reimbursement_bid_fee ? 'Yes' : 'No' %></td>
+								<td><%= offer.offer_status.nil? ? "Awaiting your response" : offer.offer_status %></td>
+								<td><%= link_to "Show", offer_path(offer.id), class: "btn btn-primary" %></td>
+							</tr>
+						<% end %>
+							<!-- <tr>
+								<td></td>
+								<td></td>
+								<td>15/08/2014</td>
+								<td>16/08/2014</td>
+								<td></td>
+								<td>Pending</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>13/08/2014</td>
+								<td>18/08/2014</td>
+								<td></td>
+								<td>Declined</td>
+								<td></td>
+							</tr> -->
+
+						</tbody>
+											       
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<div class="panel panel-primary bordered-table-container">
+			<div class="panel-heading">
+	        	<h3 class="panel-title text-center">Casino Offers Closed</h3>
+	      	</div>
+			<div class="row form-group">
+				<div class="col-sm-12">
+					<table class="table offers-table1 table-bordered table-hover">
+						<thead>
+						  	<tr>
+								<th>Offer Number</th>
+								<th>Casino Name</th>
+								<th>Offer Date</th>
+								<th>Expiration Date</th>
+								<th>Reimburse Bid Fee</th>
+								<th>Offer Status</th>
+								<th>Action</th>
+						  	</tr>
+						</thead>
+
+						<tbody>
+						<% @bid.offers.each do |offer| %>
+							<% if offer.offer_status == 'Declined' or offer.offer_status == 'Expired' %>
+								<tr>
+									<td><%= offer.reference_number %></td>
+									<td><%= offer.casino.casino_name %></td>
+									<td><%= offer.created_at.strftime("%d/%m/%Y") %></td>
+									<td><%= offer.expiration_date.strftime("%d/%m/%Y") %></td>
+									<td><%= offer.reimbursement_bid_fee ? 'Yes' : 'No' %></td>
+									<td><%= offer.offer_status == 'Declined' ? "Declined" : "Expired" %></td>
+									<td><%= link_to "Show", offer_path(offer.id), class: "btn btn-primary" %></td>
+								</tr>
+							<% end %>
+						<% end %>
+							<!-- <tr>
+								<td></td>
+								<td></td>
+								<td>15/08/2014</td>
+								<td>16/08/2014</td>
+								<td></td>
+								<td>Pending</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>13/08/2014</td>
+								<td>18/08/2014</td>
+								<td></td>
+								<td>Declined</td>
+								<td></td>
+							</tr> -->
+
+						</tbody>
+											       
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+$(document).ready(function(){
+	$.removeCookie("temp_bid", { path: '/' });
+	jQuery.fn.dataTableExt.oSort['date-dmy-asc']  = function(x,y) {
+		x_date = new Date(x);
+		y_date = new Date(y);
+		
+	    return ((x_date < y_date) ? -1 : ((x_date > y_date) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['date-dmy-desc']  = function(x,y) {
+		x_date = new Date(x);
+		y_date = new Date(y);
+	    return ((x_date > y_date) ? -1 : ((x_date < y_date) ?  1 : 0));
+	};
+	// jQuery.fn.dataTable.ext.search.push(
+	//     function( settings, data, dataIndex ) {
+
+	//     	if($('#show_pending').is(':checked')){
+	//     		if(data[5] == 'Pending' || data[5] == 'pending'){
+	//     			return true;
+	//     		}else{
+	    			
+	//     			return false;
+	//     		}
+	//     	}else{
+	//     		return true;
+	//     	}
+	        
+	//     }
+	// );
+
+	var offers_table1 = $('.offers-table1').DataTable( {
+		"dom": '<"wrapper"ftlip>',
+        "order": [[ 2, "desc" ]],
+        "paging":   true,
+        "ordering": true,
+        "info":     false,
+        "searching":true,
+        "aLengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "iDisplayLength": 5,
+
+       	"oLanguage": {
+       		"sLengthMenu": "Items per page _MENU_",
+         	"oPaginate": {
+           		"sNext": "Next",
+           		"sPrevious": "Previous",
+
+         	}
+       	},
+        "columnDefs": [
+		    { "orderable": false, "targets": 6},
+		    { "orderable": true, "targets": 2, "type": "date-dmy"},
+		    { "orderable": true, "targets": 3, "type": "date-dmy"},
+		]
+    } );
+
+	var offers_table = $('.offers-table').DataTable( {
+		"dom": '<"wrapper"ftlip>',
+        "order": [[ 2, "desc" ]],
+        "paging":   true,
+        "ordering": true,
+        "info":     false,
+        "searching":false,
+        "aLengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "iDisplayLength": 5,
+
+       	"oLanguage": {
+       		"sLengthMenu": "Items per page _MENU_",
+         	"oPaginate": {
+           		"sNext": "Next",
+           		"sPrevious": "Previous",
+
+         	}
+       	},
+        "columnDefs": [
+		    { "orderable": false, "targets": 6},
+		    { "orderable": true, "targets": 2, "type": "date-dmy"},
+		    { "orderable": true, "targets": 3, "type": "date-dmy"},
+		]
+    } );
+
+    $(".dataTables_filter").hide();
+
+    // $('#show_pending').click( function() {
+    //     offers_table.draw();
+    // } );
+
+    // $('#show_pending1').click( function() {
+    //     offers_table1.draw();
+    // } );
+});
+</script>

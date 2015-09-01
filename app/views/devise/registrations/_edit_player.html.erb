@@ -1,0 +1,123 @@
+<%= f.fields_for :player, resource.player do |player_form| %>
+
+
+  <%= player_form.hidden_field :id %>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Enter the peronal details below.</h3>
+    </div>
+
+    <div class="well">
+
+        <div class="row form-group">
+          <%= player_form.label :username, class: "col-sm-2 text-right" %>
+          <%= player_form.text_field :username, autofocus: true, autocomplete: "off", class: "col-sm-5" %>
+        </div>
+
+        <div class="row form-group">
+          <%= f.label :email, class: "col-sm-2 text-right" %>
+          <%= f.email_field :email, autocomplete: "off", class: "col-sm-5" %>
+        </div>
+
+        <div class="row form-group">
+          <%= player_form.label :first_name, class: "col-sm-2 text-right" %>
+          <%= player_form.text_field :first_name, autocomplete: "off", class: "col-sm-5" %>
+        </div>
+
+        <div class="row form-group">
+          <%= player_form.label :last_name, class: "col-sm-2 text-right" %>
+          <%= player_form.text_field :last_name, autocomplete: "off", class: "col-sm-5" %>
+        </div>
+
+        <div class="row form-group">
+          <%= player_form.label :gender, class: "col-sm-2 text-right" %>
+          <%= player_form.select :gender, [['Male', 'Male'], ['Female', 'Female']], class: "col-sm-5" %>
+        </div>
+
+        <div class="row form-group">
+          <%= player_form.label :phone, class: "col-sm-2 text-right" %>
+          <%= player_form.phone_field :phone, autocomplete: "off", class: "col-sm-5", placeholder: "(###) ###-####" %>
+        </div>
+
+        <div class="row form-group">
+          <%= player_form.label :date_of_birth, class: "col-sm-2 text-right" %>
+          <%= player_form.date_select(:date_of_birth, class: "col-sm-6",:start_year => 1900) %> 
+        </div>
+
+        <div class="row form-group">
+          <%= f.label :password, class: "col-sm-2 text-right" %>
+          <%= f.password_field :password, autocomplete: "off", class: "col-sm-5" %>
+        </div>
+        <p class="row col-sm-offset-2"><i>(leave blank if you don't want to change it)</i></p>
+        <div class="row form-group">
+          <%= f.label :password_confirmation, class: "col-sm-2 text-right" %>
+          <%= f.password_field :password_confirmation, autocomplete: "off", class: "col-sm-5" %>
+        </div>
+
+        <div class="row form-group">
+          <%= f.label :current_password, class: "col-sm-2 text-right" %>
+          <%= f.password_field :current_password, autocomplete: "off", class: "col-sm-5" %>
+        </div>
+
+        <p class="row col-sm-offset-2"><i>(we need your current password to confirm your changes)</i></p>
+
+        <div class="row form-group">
+          <%= player_form.label :avatar, class: "col-sm-2 text-right" %>
+          <%= player_form.file_field :avatar, class: "col-sm-5", accept: "image/*" %>
+          <%= player_form.hidden_field :avatar_cache %>
+         
+        </div>
+
+        <div class="row form-group col-sm-offset-2">
+          <%= image_tag(@user.player.avatar_url(:thumb)) if @user.player.avatar? %>
+        </div>
+    </div>
+    <div class="well">
+      <p class="row col-sm-offset-1">Enter the location details of the player.</p>
+      <div class="row form-group">
+          <%= player_form.label(:address, "Address:", class: "col-sm-2 text-right") %>
+          <%= player_form.text_field(:address, class: "col-sm-5") %></br>
+      </div>
+
+        <div class="row form-group">
+          <%= player_form.label(:city, "City", class: "col-sm-2 text-right") %>
+          <%= player_form.text_field(:city, class: "col-sm-5") %></br>
+      </div>
+
+      <div class="row form-group">
+          <%= player_form.label(:state, "State", class: "col-sm-2 text-right") %>
+          <%= player_form.text_field(:state, class: "col-sm-5") %></br>
+      </div>
+
+      <div class="row form-group">
+          <%= player_form.label(:postalcode, "Postal Code", class: "col-sm-2 text-right") %>
+          <%= player_form.text_field(:postalcode, class: "col-sm-5") %></br>
+      </div>
+
+      <div class="row form-group">
+          <%= player_form.label(:country, "Country", class: "col-sm-2 text-right") %>
+          <%= player_form.country_select("country", ["United States of America"]) %></br>
+
+      </div>
+        
+    </div>
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Amount I typically wager during my stay at a Casino Resort:</h3>
+    </div>
+
+    <div class="well">
+      <%= render(partial: "select_wager", locals: {f: player_form}) %>
+    </div>
+
+  </div>
+
+  <div>
+    <%= f.submit "Save", class: "btn btn-primary btn-lg" %>
+    <%= link_to "Close Account", user_registration_path, class: "btn btn-primary btn-lg", id: "close_account", confirm: "Are you sure you want to close this account?", method: "delete" %>
+  </div>
+  <br/>
+<% end %>

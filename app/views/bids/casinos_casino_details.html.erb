@@ -1,0 +1,301 @@
+<div class="container">
+
+    <h1>Casino Details</h1>
+
+  <div class="row form-group casinos-list-wrapper">
+    
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+
+          <%= link_to("<< Back to List", browse_casinos_bids_path + '?market=' + params[:market] + '&query=' + params[:query]) %>
+
+          <div class="pull-right">
+            <%= @casino.casino_name %>
+          </div>
+        </div>
+        <!-- casino images -->
+
+        <div class="section casino-images-wrapper">
+          <div class="col-sm-4">
+          <% if @casino.casino_image_1? %>
+            <img width="100%" alt="Casino Image 1" class="user_casino_attributes_casino_image_1_preview" src="<%= @casino.casino_image_1_url(:thumb) %>" height="200px"/>
+          <% else %>
+            <img width="100%" alt="Casino Image 1" class="user_casino_attributes_casino_image_1_preview" src="/no_image.png" height="200px" />
+          <% end %>
+
+          </div>
+          <div class="col-sm-4">
+            <% if @casino.casino_image_1? %>
+              <img width="100%" alt="Casino Image 2" class="user_casino_attributes_casino_image_2_preview" src="<%= @casino.casino_image_2_url(:thumb) %>" height="200px" />
+            <% else %>
+              <img width="100%" alt="Casino Image 2" class="user_casino_attributes_casino_image_2_preview" src="/no_image.png" height="200px" />
+            <% end %>
+
+          </div>
+          <div class="col-sm-4">
+            <% if @casino.casino_image_1? %>
+              <img width="100%" alt="Casino Image 3" class="user_casino_attributes_casino_image_3_preview" src="<%= @casino.casino_image_1_url(:thumb) %>" height="200px" />
+            <% else %>
+              <img width="100%" alt="Casino Image 3" class="user_casino_attributes_casino_image_3_preview" src="/no_image.png" height="200px" />
+            <% end %>
+
+          </div>
+
+          <div class="clear"></div>
+        </div>
+
+        <!-- end of casino images -->
+
+        <!-- contact info -->
+        <div class="section contact-info-wrapper">
+          <div class="pull-left">
+
+            <div class="avatar-wrapper pull-left">
+              <% if @casino.avatar? %>
+                <img width="70px" alt="Avatar" class="user_casino_attributes_avatar_preview" src="<%= @casino.avatar_url(:thumb) %>" height="70px" />
+              <% else %>
+                <img width="70px" alt="Casino Image 3" class="user_casino_attributes_avatar_preview" src="/no_image.png" height="70px" />
+              <% end %>
+            </div>
+
+            <div class="personal-info pull-left">
+              <div><%= @casino.user.fullname %></div>
+              <div><%= @casino.contact_title %></div>
+            </div>
+
+            <div class="clear"></div>
+
+          </div>
+
+
+          <div class="pull-right text-right">
+            <div class="address-wrapper">
+              <div><b><%= @casino.casino_name %></b></div>
+              <div><%= @casino.address %></div>
+              <div><%= @casino.city %>, <%= @casino.state %> <%= @casino.postal_code %></div>
+              <div><%= @casino.country %></div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <!-- end of contact info -->
+
+        <!-- section start -->
+        <div class="section row contact-message-wrapper">
+          <div class="col-sm-8">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <div>From <%= @casino.user.fullname %></div>
+                <div><%= @casino.contact_title %></div>
+              </div>
+              <div class="contact-message">
+                <%= simple_format(@casino.contact_message).html_safe %>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-4">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                Gaming Amenities:
+              </div>
+              <div class="gaming-amenities">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <span class="badge"><%= number_with_delimiter(@casino.total_table_games) %></span>
+                    Total Number of Table Games:
+                  </li>
+                  <li class="list-group-item">
+                    <span class="badge"><%= number_with_delimiter(@casino.total_slot_machines) %></span>
+                    Total Number of Slots:
+                  </li>
+                  <li class="list-group-item">
+                    &nbsp;
+                  </li>
+                  <li class="list-group-item">
+                    <span class="badge">
+                    <% if @casino.have_vip_room %>
+                      Yes
+                    <% else %>
+                      No
+                    <% end %>
+                    </span>
+                    VIP Room?
+                  </li>
+
+                  <% if @casino.have_vip_room %>
+                      <li class="list-group-item">
+                        <span class="badge">
+                        <% if @casino.have_vip_lounge %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                        </span>
+                        &nbsp;- VIP Lounge?
+                      </li>
+                      <li class="list-group-item">
+                        <span class="badge">
+                        <% if @casino.have_private_gaming_tables %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                        </span>
+                        &nbsp;- Private Tables?
+                      </li>
+
+                      <li class="list-group-item">
+                        <span class="badge">
+                        <%= number_with_delimiter(@casino.how_many_gaming_tables) %>
+                         
+                        </span>
+                        &nbsp;- VIP Tables:
+                      </li>
+
+                      <li class="list-group-item">
+                        <span class="badge">
+                        <%= number_with_delimiter(@casino.how_many_slot_machines) %>
+                         
+                        </span>
+                        &nbsp;- VIP Slots:
+                      </li>
+                  <% end %>
+
+                  <li class="list-group-item">
+                    &nbsp;
+                  </li>
+
+                  <li class="list-group-item">
+                    Max Bet(bet limit):
+                  </li>
+
+                  <li class="list-group-item">
+                    <span class="badge">
+                      <%= number_to_currency(@casino.max_bet_blackjack, options={:precision=>0}) %>
+                     
+                    </span>
+                    &nbsp;- Blackjack:
+                  </li>
+
+                  <li class="list-group-item">
+                    <span class="badge">
+                      <%= number_to_currency(@casino.max_bet_baccarat, options={:precision=>0}) %>
+                     
+                    </span>
+                    &nbsp;- Baccarat:
+                  </li>
+
+                  <li class="list-group-item">
+                    <span class="badge">
+                      <%= number_to_currency(@casino.max_bet_roulette, options={:precision=>0}) %>
+                     
+                    </span>
+                    &nbsp;- Roulette:
+                  </li>
+
+                  <li class="list-group-item">
+                    <span class="badge">
+                      <%= number_to_currency(@casino.max_bet_craps, options={:precision=>0}) %>
+                     
+                    </span>
+                    &nbsp;- Craps:
+                  </li>
+
+                  <li class="list-group-item">
+                    <span class="badge">
+                    <% if @casino.have_sports_betting_lounge %>
+                      Yes
+                    <% else %>
+                      No
+                    <% end %>
+                    </span>
+                    Sports Betting Lounge?
+                  </li>
+
+                  <% if @casino.have_sports_betting_lounge %>
+                    <li class="list-group-item">
+                      <span class="badge">
+                        <%= number_to_currency(@casino.betting_limit_on_single_sporting, options={:precision=>0}) %>
+                       
+                      </span>
+                      Max Bet on Single Event:
+                    </li>
+                  <% end %>
+
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <!-- section end -->
+
+        <div class="section">
+          <fieldset>
+            <legend>Casino Features</legend>
+            <div class="form-group casino-feature">
+              <div class="img-preview table-cell">
+                <div class="wrapper">
+                <% if @casino.feature_image_1? %>
+                  <img width="200px" alt="Feature Image 1" class="user_casino_attributes_feature_image_1_preview" src="<%= @casino.feature_image_1_url(:thumb) %>" />
+                <% else %>
+                  <img width="200px" alt="Feature Image 1" class="user_casino_attributes_feature_image_1_preview" src="/no_image.png" />
+                <% end %>
+                </div>
+              </div>
+              <div class="table-cell full" id="user_casino_attributes_feature_description_1_preview">
+                <% if @casino.feature_description_1 != '' %>
+                  <%= simple_format(@casino.feature_description_1).html_safe %>
+                <% else %>
+                  Casino Feature Description here
+                <% end %>
+                </div>
+            </div>
+
+            <div class="form-group casino-feature">
+              
+              <div class="table-cell full" id="user_casino_attributes_feature_description_2_preview">
+                <% if @casino.feature_description_2 != '' %>
+                  <%= simple_format(@casino.feature_description_2).html_safe %>
+                <% else %>
+                  Casino Feature Description here
+                <% end %>
+                </div>
+              <div class="img-preview right table-cell">
+                <div class="wrapper">
+                <% if @casino.feature_image_2? %>
+                  <img width="200px" alt="Feature Image 2" class="user_casino_attributes_feature_image_2_preview" src="<%= @casino.feature_image_2_url(:thumb) %>" />
+                <% else %>
+                  <img width="200px" alt="Feature Image 2" class="user_casino_attributes_feature_image_2_preview" src="/no_image.png" />
+                <% end %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group casino-feature">
+              <div class="img-preview table-cell">
+                <div class="wrapper">
+                <% if @casino.feature_image_3? %>
+                  <img width="200px" alt="Feature Image 3" class="user_casino_attributes_feature_image_3_preview" src="<%= @casino.feature_image_3_url(:thumb) %>" />
+                <% else %>
+                  <img width="200px" alt="Feature Image 3" class="user_casino_attributes_feature_image_3_preview" src="/no_image.png" />
+                <% end %>
+                </div>
+              </div>
+              <div class="table-cell full" id="user_casino_attributes_feature_description_3_preview">
+              <% if @casino.feature_description_3 != '' %>
+                  <%= simple_format(@casino.feature_description_3).html_safe %>
+                <% else %>
+                  Casino Feature Description here
+                <% end %>
+                </div>
+            </div>
+          </fieldset>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+	
+</div>

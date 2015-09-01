@@ -1,0 +1,44 @@
+<div class="container">
+	
+	<h1>List of Bids</h1></br>
+
+  <%= link_to("Add New Bid", {action: 'new'}, class: "btn btn-primary") %>
+
+</br>
+</br>
+
+  <table class="table table-bordered table-condensed">
+    <tr class="bid-index">
+			<th>Date Submitted</th>
+			<th>Name of Bid</th>
+      <th>Arrival</th>
+      <th>Departure</th>
+			<th>Wager Level</th>
+			<th>Casino Offers</th>
+			<th>Action</th>
+    </tr>
+
+    <% @bids.each do |bid| %>
+    <tr class="bid-index">
+      <td><%= bid.created_at.strftime("%a, %b %d, %Y") %></td>
+			<td><%= bid.bid_name %></td>
+			<td><%= bid.arrival_date %></td>
+			<td><%= bid.departure_date %></td>
+			<td><%= bid.wager_level %></td>
+			<td><%= bid.offers.size %></td>
+      
+			<td class="actions">
+        <%= link_to("Show", bid_path(bid.id)) %>
+        <%= link_to("Edit", edit_bid_path(bid.id)) %>
+        <%= link_to("Delete", delete_bid_path(bid.id)) %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+	<div style="margin-bottom: 200px"></div>
+</div>
+
+</br>
+</br>
+
+

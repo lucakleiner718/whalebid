@@ -1,0 +1,241 @@
+<div class="well">
+
+	<fieldset>
+		<legend>1. Main Info</legend>
+	  	<div class="row form-group">
+	  		
+	  		<%= f.label :bid_name, "Your bid name:", class: "col-sm-5" %>
+	  		<div class="col-sm-7" id="bid_bid_name_preview">
+	  			<%= @bid.bid_name %>
+	  		</div>	
+
+	  	</div>
+	  	<div class="row form-group">
+	  		<label class="col-sm-12">
+	  			Your bid will be sent to:
+	  		</label>
+
+	  	</div>
+
+	  	<div class="row form-group">
+	  		<div class="col-sm-5">
+  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="bid_by_market_true_preview" disabled="true" name="bid_by_market">
+  				<b>This market: </b>
+  			</div>
+  			<div class="col-sm-7">
+  				<b><span id="bid_market_preview"><%= @bid.market %></span></b>
+  			</div>
+  		</div>
+
+  		<div class="row form-group">
+  			<div class="col-sm-4 col-sm-offset-1">
+	  			<div>Which includes this many casinos:</div>
+	  			
+	  		</div>
+	  		<div class="col-sm-7">
+	  			<div><span id="bid_market_count_preview"></span></div>
+	  		</div>
+  		</div>
+
+  		<div class="row form-group">
+  			<div class="col-sm-12">
+	  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="bid_by_market_false_preview" disabled="true" name="bid_by_market">
+	  			<b>These specific casinos that you have selected:</b>
+	  		</div>
+  		</div>
+  		<div class="row">
+  			<div class="col-sm-4 col-sm-offset-1">First choice: </div>
+  			<div class="col-sm-7" id="bid_first_casino_preview"></div>
+  		</div>
+  		<div class="row">
+  			<div class="col-sm-4 col-sm-offset-1">Second choice: </div>
+  			<div class="col-sm-7" id="bid_second_casino_preview"></div>
+  		</div>
+  		<div class="row">
+  			<div class="col-sm-4 col-sm-offset-1">Third choice: </div>
+  			<div class="col-sm-7" id="bid_third_casino_preview"></div>
+  		</div>
+  		<div class="row">
+  			<div class="col-sm-4 col-sm-offset-1">Fourth choice: </div>
+  			<div class="col-sm-7" id="bid_fourth_casino_preview"></div>
+  		</div>
+
+  		<div class="row">
+  			<div class="col-sm-4 col-sm-offset-1">Fifth choice: </div>
+  			<div class="col-sm-7" id="bid_fifth_casino_preview"></div>
+  		</div>
+  		<br />
+  		<div class="row form-group">
+	  		
+	  		<%= f.label :arrival_date, "Arrival Date:", class: "col-sm-5" %>
+	  		<div class="col-sm-6" id="bid_arrival_date_preview">
+	  			<span id="bid_arrival_date_preview"></span>
+	  		</div>	
+
+	  	</div>
+
+	  	<div class="row form-group">
+	  		
+	  		<%= f.label :departure_date, "Departure Date:", class: "col-sm-5" %>
+	  		<div class="col-sm-6" id="bid_departure_date_preview">
+
+	  			<span id="bid_departure_date_preview"></span>
+
+	  		</div>	
+
+	  	</div>
+
+	  	<div class="row form-group">
+	  		
+	  		<%= f.label :adults, "Number of adults:", class: "col-sm-5" %>
+	  		<div class="col-sm-6" id="bid_adults_preview">
+	  			<%= @bid.adults %>
+	  		</div>	
+
+	  	</div>
+
+	  	<div class="row form-group">
+	  		
+	  		<%= f.label :children, "Number of children:", class: "col-sm-5" %>
+	  		<div class="col-sm-6" id="bid_children_preview">
+	  			<%= @bid.children %>
+	  		</div>	
+
+	  	</div>
+
+	  	<div class="pull-right">
+  			<a href="javascript:goPage(0)" class="btn btn-primary btn-small">Edit</a>
+  		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>2. Wager Level</legend>
+		<div class="row form-group">
+	  		
+	  		<%= f.label :player_category, "Your player category for this bid is:", class: "col-sm-5" %>
+	  		<div class="col-sm-5 bid_player_category_preview">
+	  			<%= @bid.player_category %>
+	  		</div>	
+
+	  	</div>
+
+	  	<div class="row form-group">
+	  		
+	  		<%= f.label :wager_level, "During your stay, you promise to wager:", class: "col-sm-5" %>
+	  		<div class="col-sm-5 bid_wager_level_preview">
+	  			<%= @bid.wager_level %>
+	  		</div>	
+
+	  	</div>
+
+	  	<div class="row form-group">
+	  		
+	  		<%= f.label :bid_fee, "Your bid fee is:", class: "col-sm-5" %>
+	  		<div class="col-sm-5">
+	  			$<span id="bid_bid_fee_preview"><%= @bid.bid_fee %></span>
+	  		</div>	
+
+	  	</div>
+
+	  	<div class="form-group" id="bid_bid_fee_reimbursement_text_preview">
+	  		Yes, I would like my bid fee to be reimbursed by the Casino. I understand that my bid fee will only be reimbursed if during my visit I have total gambling losses greater than my bid fee, and only if I have wagered the amount I have promised to wager during my stay.
+	  	</div>
+
+	  	<div class="pull-right">
+  			<a href="javascript:goPage(1)" class="btn btn-primary btn-small">Edit</a>
+  		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>3. Service Preferences</legend>
+		<div class="row">
+	  		<%= f.label :preference_accomodations, "Accomodations:", class: "col-sm-4" %>	
+	  		<div class="col-sm-8 text-right">Level of importance: <span id="bid_preference_accomodations_level_preview">
+	  		</span></div>
+
+	  	</div>
+
+  		<div class="row form-group">
+  			<div class="col-sm-12">
+	  			<div id="bid_preference_accomodations_preview" class="preference-box">
+	  			</div>
+	  		</div>
+  		</div>
+
+
+  		<div class="row">
+	  		<%= f.label :preference_dining, "Dining:", class: "col-sm-4" %>	
+	  		<div class="col-sm-8 text-right">Level of importance: <span id="bid_preference_dining_level_preview">
+	  		</span></div>
+	  	</div>
+
+  		<div class="row form-group">
+  			<div class="col-sm-12">
+	  			<div id="bid_preference_dining_preview" class="preference-box">
+	  			</div>
+	  		</div>
+  		</div>
+
+  		<div class="row">
+	  		<%= f.label :preference_entertainment, "Entertainment & Recreation:", class: "col-sm-4" %>	
+	  		<div class="col-sm-8 text-right">Level of importance: <span id="bid_preference_entertainment_level_preview">
+	  		</span></div>
+	  	</div>
+
+  		<div class="row form-group">
+  			<div class="col-sm-12">
+	  			<div id="bid_preference_entertainment_preview" class="preference-box">
+	  			</div>
+	  		</div>
+  		</div>
+
+  		<div class="row">
+	  		<%= f.label :preference_transportation, "Transportation:", class: "col-sm-4" %>	
+	  		<div class="col-sm-8 text-right">Level of importance: <span id="bid_preference_transportation_level_preview">
+	  		</span></div>
+	  	</div>
+
+
+  		<div class="row form-group">
+  			<div class="col-sm-12">
+	  			<div id="bid_preference_transportation_preview" class="preference-box">
+	  			</div>
+	  		</div>
+  		</div>
+
+  		<div class="row">
+	  		<%= f.label :preference_gaming, "Gaming:", class: "col-sm-4" %>	
+	  		<div class="col-sm-8 text-right">Level of importance: <span id="bid_preference_gaming_level_preview">
+	  		</span></div>
+	  	</div>
+
+  		<div class="row form-group">
+  			<div class="col-sm-12">
+	  			<div id="bid_preference_gaming_preview" class="preference-box">
+	  			</div>
+	  		</div>
+  		</div>
+
+  		<div class="row">
+	  		<%= f.label :preference_other, "Other preferences:", class: "col-sm-4" %>	
+	  		<div class="col-sm-8 text-right">Level of importance: <span id="bid_preference_other_level_preview">
+	  		</span></div>
+	  	</div>
+
+  		<div class="row form-group">
+  			<div class="col-sm-12">
+	  			<div id="bid_preference_other_preview" class="preference-box">
+	  			</div>
+	  		</div>
+  		</div>
+  	
+  		<div class="pull-right">
+  			<a href="javascript:goPage(2)" class="btn btn-primary btn-small">Edit</a>
+  		</div>
+	</fieldset>
+
+</div>
+<div class="text-center">
+	Everything looks good?<br />
+	<%= f.submit("Save and Submit My Bid", class: "btn btn-primary btn-lg") %>
+</div>

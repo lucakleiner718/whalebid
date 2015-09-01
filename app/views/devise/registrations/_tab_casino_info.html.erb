@@ -1,0 +1,78 @@
+<%= f.fields_for :casino, resource.casino do |casino_form| %>
+	<div class="well">
+
+	  	<div class="row form-group">
+	  		
+	  		<%= casino_form.label :casino_name, "Casino Name", class: "col-sm-2 text-right" %>
+	  		<%= casino_form.text_field :casino_name, autocomplete: "off", class: "col-sm-5", placeholder: "e.g., \"The Bellagio\" or \"Pechanga Resort and Casino\" " %>
+
+	  	</div>
+
+	  	<div class="row form-group">
+	  		<%= casino_form.label :casino_market, "Casino Market", class: "col-sm-2 text-right" %>
+	  		<%= casino_form.select :casino_market,
+	  								['Las Vegas Strip, Nev.',
+	  								 'Atlantic City, N.J.',
+	  								 'Chicagoland, Ind./Ill.',
+	  								 'Detroit, Mich.',
+	  								 'Connecticut',
+	  								 'Philadelphia, Pa.',
+	  								 'St. Louis, Mo./Ill.',
+	  								 'Gulf Coast, Miss.',
+	  								 'Gulf Coast, Miss.',
+	  								 'The Poconos, Pa.',
+	  								 'Tunica/Lula, Miss.',
+	  								 'Kansas City, Mo.',
+	  								 'Boulder Strip, Nev.',
+	  								 'Shreveport/Bossier City, La.',
+	  								 'Lake Charles, La.',
+	  								 'New York City, N.Y.',
+	  								 'Reno/Sparks, Nev.',
+	  								 'Pittsburgh/Meadow Lands, Pa.',
+	  								 'Black Hawk, Colo.',
+	  								 'Lawrenceburg/Rising Sun/Belterra, Ind.',
+	  								 'New Orleans, La.'], class: "col-sm-5" %>
+	  	</div>
+
+	  	<div class="row form-group">
+	  		<%= casino_form.label(:address, "Address", class: "col-sm-2 text-right") %>
+	    	<%= casino_form.text_field(:address, class: "col-sm-5") %></br>
+	 	</div>
+
+	  	<div class="row form-group">
+	  		<%= casino_form.label(:city, "City", class: "col-sm-2 text-right") %>
+	    	<%= casino_form.text_field(:city, class: "col-sm-5") %></br>
+	 	</div>
+
+	 	<div class="row form-group">
+	  		<%= casino_form.label(:state, "State", class: "col-sm-2 text-right") %>
+	    	<%= casino_form.text_field(:state, class: "col-sm-5") %></br>
+	 	</div>
+
+	 	<div class="row form-group">
+	  		<%= casino_form.label(:postal_code, "Postal Code", class: "col-sm-2 text-right") %>
+	    	<%= casino_form.text_field(:postal_code, class: "col-sm-5") %></br>
+	 	</div>
+
+	 	<div class="row form-group">
+	  		<%= casino_form.label(:country, "Country", class: "col-sm-2 text-right") %>
+	    	<%= casino_form.country_select("country", ["United States of America"]) %></br>
+	 	</div>
+
+	  	<div class="row form-group">
+	  		<%= casino_form.label :phone, "Casino Phone Number", class: "col-sm-2 text-right" %>
+	  		<%= casino_form.phone_field :phone, autocomplete: "off", class: "col-sm-5", placeholder: "(###) ###-####" %>
+	  	</div>
+
+	  	<div class="row form-group">
+	  		<%= casino_form.label :website, "Casino Website URL", class: "col-sm-2 text-right" %>
+	  		<%= casino_form.text_field :website, class: "col-sm-5" %>
+	  	</div>
+
+
+	</div>
+
+	<div class="text-center">
+		<a href="javascript:goPage(1)" class="btn btn-primary btn-lg">Next Page</a>
+	</div>
+<% end %>

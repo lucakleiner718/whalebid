@@ -1,0 +1,166 @@
+
+<div class="container">
+	</br>
+	
+	<h1>Create your bid!</h1>
+
+	<%= render(partial: "form") %>
+</div>
+
+<script>
+	function goPage(page){
+		$('#casinoTab a:eq(' + page + ')').tab('show');
+		$(document).scrollTop(0);
+	}
+
+	$(document).ready(function(){
+
+	<% if !@bid.bid_name.nil? %>
+		$("input, select, button, a").attr("disabled", true);
+	<% end %>
+		var today = new Date();
+		var dd = today.getDate();
+		// today.setDate(dd - 1);
+		// dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+
+	    if(!$("#bid_arrival_date_show" ).val()){
+	    	$( "#bid_arrival_date_show" ).val( mm + "/" + dd + "/" + yyyy );
+	    	$( "#bid_arrival_date" ).val( yyyy + "-" + mm + "-" + dd );
+	    	$( "#bid_departure_date_show" ).val( mm + "/" + dd + "/" + yyyy );
+	    	$( "#bid_departure_date" ).val( yyyy + "-" + mm + "-" + dd );
+	    }
+
+		$( "#bid_arrival_date_show" ).datepicker({
+	      	defaultDate: "+1w",
+	      	changeMonth: true,
+	      	numberOfMonths: 1,
+	      	dateFormat: "mm/dd/yy",
+	      	altField: "#bid_arrival_date",
+      		altFormat: "yy-mm-dd",
+      		minDate: mm + "/" + dd + "/" + yyyy,
+	      	onClose: function( selectedDate ) {
+	        	$( "#bid_departure_date_show" ).datepicker( "option", "minDate", selectedDate );
+	      	}
+	    });
+	    $( "#bid_departure_date_show" ).datepicker({
+	      	defaultDate: "+1w",
+	      	changeMonth: true,
+	      	numberOfMonths: 1,
+	      	dateFormat: "mm/dd/yy",
+	      	altField: "#bid_departure_date",
+      		altFormat: "yy-mm-dd",
+	      	onClose: function( selectedDate ) {
+	        	// $( "#bid_arrival_date_show" ).datepicker( "option", "maxDate", selectedDate );
+	      	}
+	    });
+
+		function showTypicalPerks(playerCategory){
+			if (window.showModalDialog) {
+				window.showModalDialog("/show_perks/" + playerCategory,"Show Typical Perks", "dialogWidth:600px;dialogHeight:500px");
+			} else {
+				window.open("/show_perks/" + playerCategory,'Show Typical Perks', 'height=500,width=600,toolbar=no,directories=no,status=no,continued from previous linemenubar=no,scrollbars=no,resizable=no ,modal=yes');
+			}
+		}
+
+		$(".show-perks-link").click(function(e){
+			e.preventDefault();
+			showTypicalPerks($(this).data("player-category"))
+			
+		});
+
+		$(".show-typical-perks-link").click(function(e){
+			e.preventDefault();
+			showTypicalPerks($("#bid_player_category").val());
+		});
+
+		function saveBidData(){
+			var formObj = $("form").serializeObject();
+			
+			var casino_names = [];
+			$("select[name='casinos[]']").each(function(){
+				casino_names.push($(this).find(" option:selected").html());
+			});
+
+			formObj["casino_names"] = casino_names;
+
+			console.log(formObj);
+			$.removeCookie("temp_bid", { path: '/' });
+			$.cookie("temp_bid", JSON.stringify(formObj), { path: '/' });
+		}
+
+		function clearBidData(){
+			$.removeCookie("temp_bid", { path: '/' });
+		}
+
+		$(".btn-browse").click(function(e){
+			if($("input[name='bid[bid_name]']").val() == ""){
+				alert("You should enter a bid name for your bid before browing markets/casinos!");
+				return false;
+			}
+
+			saveBidData();
+
+			return true;
+		});
+
+		$("input[type='submit']").click(function(e){
+			saveBidData();
+			return true;
+		});
+
+		function loadBidData(){
+			if($.cookie("temp_bid") != undefined && $.cookie("temp_bid") != ""){
+				var formObj = JSON.parse($.cookie("temp_bid"));
+				console.log(formObj)
+				$.each(formObj, function(key, value){
+					if(key == "authenticity_token" || key == "utf8" || key == "casino_names"){
+						return;
+					}
+
+					if(key == "casinos[]"){
+						
+					}else if(key == "bid[by_market]"){
+						if(value){
+							$("#bid_by_market_" + value).prop('checked', true);
+						}
+					}else if(key == "bid[wager_level]"){
+
+						$("input[name='bid[wager_level]']").each(function(){
+
+							if($(this).val() == value){
+								$(this).prop("checked", true);
+							}
+						});
+					}else{
+						$("[name='" + key + "']").val(value);
+					}
+				});
+
+				$("select[name='casinos[]']").each(function(index){
+					$(this).val(formObj["casinos[]"][index]);
+				});
+				
+			}
+		}
+
+		loadBidData();
+		// setTimeout(function(){
+		// 	$('#error_explanation').remove();
+		// }, 3000)
+
+		// setTimeout(function(){$('#casinoTab a:last').tab('show')}, 100);
+
+	});
+
+</script>
+

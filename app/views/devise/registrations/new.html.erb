@@ -1,0 +1,15 @@
+<div class="container">
+	</br>
+	<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+		<input type="hidden" name="type" value="<%= params[:type] %>">
+		<%= devise_error_messages! %>
+		
+		<% if(params[:type] == 'casino') %>
+			<%= render(partial: "new_casino", locals: {f: f}) %>
+		<% elsif %>
+			<%= render(partial: "new_player", locals: {f: f}) %>
+		<% end %>
+				
+		<!--<%= render "devise/shared/links" %>-->
+	<% end %>
+</div>

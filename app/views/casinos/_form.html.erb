@@ -1,0 +1,43 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Enter the details of the new casino below.</h3>
+	</div>
+
+	<div class="well">
+		<p class="row col-sm-offset-1">Enter the full name of the casino resort.</p></br>
+		<div class="row form-group">
+	  	<%= f.label(:casino_name, "Casino Name:", class: "col-sm-2 text-right") %>
+	    <%= f.text_field(:casino_name, placeholder: "e.g., \"The Bellagio\" or \"Pechanga Resort and Casino\" ", class: "col-sm-5") %></br>
+	 	</div>
+	
+		<p class="row col-sm-offset-1">Select the market of the casino.</p></br>
+		<div class="row form-group">
+	  	<%= f.label(:casino_market, "Casino Market:", class: "col-sm-2 text-right") %>
+	    <%= f.text_field(:casino_market, placeholder: "e.g., \"Las Vegas Strip\" or \"California, Southern\" ", class: "col-sm-5") %></br>
+	 	</div>
+	</div><!--Close well-->
+	
+	<div class="well">
+		<p class="row col-sm-offset-1">Enter the location details of the casino resort.</p></br>
+		<div class="row form-group">
+	  	<%= f.label(:city, "City:", class: "col-sm-2 text-right") %>
+	    <%= f.text_field(:city, class: "col-sm-5") %></br>
+	 	</div>
+		<div class="row form-group">
+	  	<%= f.label(:state, "State:", class: "col-sm-2 text-right") %>
+	    <%= f.text_field(:state, class: "col-sm-5") %></br>
+	 	</div>
+		<div class="row form-group">
+	  	<%= f.label(:postal_code, "Postal Code:", class: "col-sm-2 text-right") %>
+	    <%= f.text_field(:postal_code, class: "col-sm-5") %></br>
+	 	</div>
+		<div class="row form-group">
+	  	<%= f.label(:country, "Country:", class: "col-sm-2 text-right") %>
+	    <%= f.text_field(:country, class: "col-sm-5") %></br>
+	 	</div>
+	</div><!--Close well-->
+</div><!--Close panel-->
+
+
+</br>
+</br>

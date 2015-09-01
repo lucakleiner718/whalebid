@@ -1,0 +1,115 @@
+<div class="well">
+	<%= f.hidden_field(:user_id, value: current_user.id) %>
+	<fieldset>
+		<legend>Name your bid</legend>
+	
+  		<div class="row form-group">
+			<%= f.label(:bid_name, "Enter a name for your bid:", class: "col-sm-3 text-right") %>
+			<%= f.text_field(:bid_name, class: "col-sm-5", placeholder: "e.g., \"Las Vegas Trip\" or \"Big Money Gateway\" ") %>
+		</div>
+
+		<p class="row col-sm-offset-3"><i>The bid name will help you identify your bid.</i></p>
+
+	</fieldset>
+
+	<fieldset>
+		<legend>Select which casinos should receive your bid</legend>
+	  	<div class="row form-group">
+	  		<div class="col-sm-6">
+	  			<div class="market-select-wrapper">
+	  				<div class="select-option">
+	  					<%= f.radio_button(:by_market, true, checked: @bid.by_market != false) %> Select by Market
+	  				</div>
+	  				<div class="select-intro">
+	  					<div class="col-sm-6">
+
+	  						You can submit a bid to a region or city such as the Las Vegas Trip, or Atlantic city. Your bid will be submitted to all of the participating casinos in that market.
+	  					</div>
+	  					<div class="col-sm-6">
+	  						<a href="<%= browse_markets_bids_path %>" class="btn btn-primary btn-browse">Browse Markets</a>
+	  					</div>
+	  					<div class="clear"></div>
+	  				</div>
+
+	  				<div class="select-list col-sm-12">
+	  					<% markets_array = @markets_with_count.map { |key, value| [key + "(" + value.to_s + ")", key] } %>
+
+	  					<%= f.select(:market, markets_array, {:prompt => "Select your target casino market..."}, {:class => "form-control"}) %>
+	  				</div>
+	  			</div>
+	  		</div>
+
+	  		<div class="col-sm-6">
+	  			<div class="market-select-wrapper">
+	  				<div class="select-option">
+	  					<%= f.radio_button(:by_market, false, checked: @bid.by_market == false) %> Select specific casinos
+	  				</div>
+	  				<div class="select-intro">
+	  					<div class="select-intro-text col-sm-6">
+	  						Or, you can select up to 5 individual casinos. Your bid will be sent only to the casinos you have selected. Enter your selection in order of your preference.
+	  					</div>
+	  					<div class="browse-button col-sm-6">
+	  						<a href="<%= browse_casinos_bids_path %>" class="btn btn-primary btn-browse">Browse Casinos</a>
+	  					</div>
+	  					<div class="clear"></div>
+	  				</div>
+
+	  				<div class="select-list col-sm-12">
+	  					<%= select_tag("casinos[]", options_from_collection_for_select(@casinos, "id", "casino_name"), {prompt: "First casino...", class: "form-control", id: "bid_first_casino"}) %><br />
+	  					<%= select_tag("casinos[]", options_from_collection_for_select(@casinos, "id", "casino_name"), {prompt: "Second casino...", class: "form-control", id: "bid_second_casino"}) %><br />
+
+	  					<%= select_tag("casinos[]", options_from_collection_for_select(@casinos, "id", "casino_name"), {prompt: "Third casino...", class: "form-control", id: "bid_third_casino"}) %><br />
+
+	  					<%= select_tag("casinos[]", options_from_collection_for_select(@casinos, "id", "casino_name"), {prompt: "Fourth casino...", class: "form-control", id: "bid_fourth_casino"}) %><br />
+
+	  					<%= select_tag("casinos[]", options_from_collection_for_select(@casinos, "id", "casino_name"), {prompt: "Fifth casino...", class: "form-control", id: "bid_fifth_casino"}) %><br />
+
+	  					
+	  				</div>
+	  			</div>
+	  		</div>
+	  	</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>Enter the date of your visit and how many guests</legend>
+		<div class="date-guests-wrapper row">
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-11">
+						<label>Enter your planned arrival and departure dates</label>
+					</div>
+				</div><br />
+				<div class="row">
+					<%= f.label(:arrival_date, "Arrival Date:", class: "col-sm-5") %>
+					<%= f.hidden_field(:arrival_date, class: "col-sm-6") %> 
+					<%= f.text_field(:arrival_date, class: "col-sm-6", id: "bid_arrival_date_show", name: "bid_arrival_date_show", readonly: "readonly" ) %> 
+				</div><br />
+				<div class="row">
+					<%= f.label(:departure_date, "Departure Date:", class: "col-sm-5") %>
+					<%= f.hidden_field(:departure_date, class: "col-sm-6") %> 
+					<%= f.text_field(:departure_date, class: "col-sm-6", id: "bid_departure_date_show", name: "bid_departure_date_show", readonly: "readonly") %> 
+				</div><br />
+			</div>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-11">
+						<label>How many will be staying with you?</label>
+					</div>
+				</div><br />
+				<div class="row">
+					<%= f.label(:adults, "Adults:", class: "col-sm-3") %>
+					<%= f.select(:adults, 1..5, class: "col-sm-6") %>
+				</div><br />	
+				<div class="row">
+					<%= f.label(:children, "Children:", class: "col-sm-3") %>
+					<%= f.select(:children, 0..7, class: "col-sm-6") %> 
+				</div><br />
+			</div>
+		</div>
+	</fieldset>
+
+</div>
+<div class="text-center">
+	<a href="javascript:goPage(1)" class="btn btn-primary btn-lg">Next Page</a>
+</div>

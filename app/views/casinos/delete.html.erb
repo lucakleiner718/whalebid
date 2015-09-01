@@ -1,0 +1,24 @@
+<div class="container">
+
+	</br>
+
+	<%= link_to("<< Back to List of Casinos", {action: 'index'}, class: 'btn btn-primary') %></br>
+	</br>
+	
+	<h2>Delete Casino</h2></br>
+
+		<%= form_for(:casino, url: {action: 'destroy'}, html: {:method => :delete}) do |f| %>
+	
+	  	<p>Are you sure you want to permanently delete this casino?</p>
+
+	  	<p class="reference-name"><%= @casino.casino_name %></p>
+	
+			</br>
+
+		  <%= submit_tag("Yes, delete this bid!", class: "btn btn-primary") %>
+			<%= link_to("No, I would like to keep this record.", casinos_path, class: "btn btn-primary") %></br>
+		</br>
+
+		<% end %>
+
+</div><!--Close container-->

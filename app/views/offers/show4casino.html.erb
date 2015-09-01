@@ -1,0 +1,541 @@
+<div class="well">
+
+  <!-- start of page header -->
+	<div class="row form-group">
+    <div class="col-sm-3">
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      <%= link_to "<< Back to Manage Offers List", offers_path, class: "btn btn-primary btn-sm" %>
+    </div>
+    <div class="col-sm-6 text-center">
+      <h1>
+        <% if @offer.offer_status == 'Accepted' %>
+          Player has accepted your offer!
+        <% elsif @offer.offer_status == 'Responsed' %>
+          Player has accepted your offer!
+        <% elsif @offer.offer_status == 'Confirmed' %>
+          Player has accepted your offer!
+        <% elsif @offer.offer_status == 'Declined' %>
+          Player has declined your offer!
+        <% else %>
+          Awaiting Player's Response to Your Offer
+        <% end %>
+      </h1>
+      <h4>
+        <% if @offer.offer_status == 'Accepted' %>
+          Contact Player by email or phone.<br/>
+          Player is awaiting your response.
+        <% elsif @offer.offer_status == 'Responsed' %>
+          You have contacted this Player by email or phone.<br/>
+          Awaiting confirmation.
+        <% elsif @offer.offer_status == 'Confirmed' %>
+          You have confirmed their stay!
+        <% elsif @offer.offer_status == 'Declined' %>
+          
+        <% else %>
+          Your offer has been sent to the Player, but the Player has not yet responded.
+        <% end %>
+      </h4>
+    </div>
+    <div class="col-sm-3">
+      <div class="pull-right">
+      <% if @offer.offer_status == 'Accepted' %>
+        &nbsp;<br/>
+        &nbsp;<br/>
+        Click here to indicate you<br/>
+        have responded to the player<br/>
+        by email or phone.<br/>
+      
+        <%= link_to "Mark as Responsed", respond_offer_path, class: "btn btn-primary btn-sm full" %>
+      <% elsif @offer.offer_status == "Responsed" %>
+        &nbsp;<br/>
+        &nbsp;<br/>
+        Click here to indicate you<br/>
+        have contacted to the player<br/>
+        and confirmed their stay.<br/>
+      
+        <%= link_to "Mark as Confirmed", confirm_offer_path, class: "btn btn-primary btn-sm full" %>
+      <% end %>
+      </div>
+    </div>
+	</div>
+  <!-- end of page header -->
+
+  <!-- start of player contacts -->
+  <div class="panel panel-primary">
+    <div class="heading-blue">
+      <div class="col-sm-3">
+        First Name:
+      </div>
+      <div class="col-sm-3">
+        Last Name:
+      </div>
+      <div class="col-sm-3">
+        Email:
+      </div>
+      <div class="col-sm-3">
+        Telephone number:
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="">
+      <div class="col-sm-3">
+        <%= @offer.bid.user.player.first_name %>
+      </div>
+      <div class="col-sm-3">
+        <%= @offer.bid.user.player.last_name %>
+      </div>
+      <div class="col-sm-3">
+        <%= @offer.bid.user.player.phone %>
+      </div>
+      <div class="col-sm-3">
+        <%= @offer.bid.user.email %>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+  </div>
+  <!-- end of player contacts -->
+
+  <!-- start of bid info -->
+  <div class="panel panel-primary">
+    <div class="heading-blue">
+      <div class="col-sm-3">
+        Arrival Date:
+      </div>
+      <div class="col-sm-3">
+        Departuer Date:
+      </div>
+      <div class="col-sm-3">
+        Adults:
+      </div>
+      <div class="col-sm-3">
+        Children:
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="">
+      <div class="col-sm-3">
+        <%= @offer.bid.arrival_date.strftime("%B %d, %Y") %>
+      </div>
+      <div class="col-sm-3">
+        <%= @offer.bid.arrival_date.strftime("%B %d, %Y") %>
+      </div>
+      <div class="col-sm-3">
+        <%= @offer.bid.adults %>
+      </div>
+      <div class="col-sm-3">
+        <%= @offer.bid.children %>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+  </div>
+  <!-- end of bid info -->
+
+  <!-- start of player and bid summary -->
+  <div class="row form-group">
+    <!-- start of player's bid summary -->
+    <div class="col-sm-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Summary of Player's Bid</h3>
+        </div>
+
+        <div class="well">
+          <div class="row">
+            <label class="col-sm-5">Player username:</label>
+            <label class="col-sm-7">
+              <%= @offer.bid.user.player.username %>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-5">Wager level for this bid:</label>
+            <label class="col-sm-7"><%= @offer.bid.wager_level %> (<%= @offer.bid.player_category %>)</label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-5">Player's Bid Fee:</label>
+            <label class="col-sm-7">$<%= number_with_delimiter(@offer.bid.bid_fee) %></label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-5">Bid fee reimbursement:</label>
+            <label class="col-sm-7">
+              <%= (@offer.bid.bid_fee_reimbursement ? "Yes" : "No") %>
+            </label>
+          </div>
+
+
+          <div class="row">
+            <label class="col-sm-5">Bid close Date:</label>
+            <label class="col-sm-7">
+              <%= @offer.bid.close_at.strftime("%B %d, %Y") %>&nbsp;
+              <% if @offer.bid.close_at >= Date.today %>
+                (<%= Date.parse(@offer.bid.close_at.strftime("%B %d, %Y")).mjd-Date.today.mjd %> days from now)
+              <% end %>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-5">Bid Submission Date:</label>
+            <label class="col-sm-7"><%= @offer.bid.created_at.strftime("%B %d, %Y") %></label>
+          </div>
+
+
+          <div class="row">
+            <label class="col-sm-5">Type of Bid:</label>
+            <label class="col-sm-7">
+              <%= (@offer.bid.by_market ? "Market" : "Select") %>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-5">Offers received:</label>
+            <label class="col-sm-7">
+              <%= @offer.bid.offers.where('offer_status is null or offer_status != ?','Declined by casino').count %> of <%= @offer.bid.casinos.count %>
+            </label>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- end of the player's bid summary -->
+
+    <!-- start of the player profile summary -->
+    <div class="col-sm-6">
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Player's Profile</h3>
+        </div>
+
+        <div class="well">
+          <div class="row">
+            <label class="col-sm-6">Player gender:</label>
+            <label class="col-sm-6"><%= @offer.bid.user.player.gender %></label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-6">Age:</label>
+            <label class="col-sm-6">
+              <%= Date.today.year - @offer.bid.user.player.date_of_birth.year  %>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-6">City, State:</label>
+            <label class="col-sm-6">
+              <%= @offer.bid.user.player.city  %>, <%= @offer.bid.user.player.state  %>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-6">Country:</label>
+            <label class="col-sm-6">
+              <%= @offer.bid.user.player.country  %>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-6">Player's registration date:</label>
+            <label class="col-sm-6"><%= @offer.bid.user.created_at.strftime("%B %d, %Y") %></label>
+          </div>
+
+          <div class="row">
+            <label class="col-sm-6">Player's wager level in profile:</label>
+            <label class="col-sm-6"><%= @offer.bid.user.player.wager_level %></label>
+          </div>
+          <div class="row">
+            <label class="col-sm-6">&nbsp;</label>
+            <label class="col-sm-6">&nbsp;</label>
+          </div>
+          <div class="row">
+            <label class="col-sm-6">&nbsp;</label>
+            <label class="col-sm-6">&nbsp;</label>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- end of the player profile summary -->
+
+  </div>
+  <!-- end of player and bid summary -->
+
+  <!-- start of player's comp request -->
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+				<h3 class="panel-title text-center">
+    			Player's Bid Details (Comp Request)
+				</h3>
+    </div>
+
+    <div class="well">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12"><b>Accomodations: </b><div class="badge pull-right"><%= @offer.bid.preference_accomodations_level %></div></div>
+            
+          </div>
+
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <div class="preference-box">
+                <%= @offer.bid.preference_accomodations %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12"><b>Dining: </b><div class="badge pull-right"><%= @offer.bid.preference_dining_level %></div></div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <div class="preference-box">
+                <%= @offer.bid.preference_dining %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12"><b>Entertainment & Recreation: </b><div class="badge pull-right"><%= @offer.bid.preference_entertainment_level %></div></div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <div class="preference-box">
+                <%= @offer.bid.preference_entertainment %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+
+          <div class="row">
+            <div class="col-sm-12"><b>Transportation: </b><div class="badge pull-right"><%= @offer.bid.preference_transportation_level %></div></div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <div class="preference-box">
+                <%= @offer.bid.preference_transportation %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12"><b>Gaming: </b><div class="badge pull-right"><%= @offer.bid.preference_gaming_level %></div></div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <div class="preference-box">
+                <%= @offer.bid.preference_gaming %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+
+          <div class="row">
+            <div class="col-sm-12"><b>Other Preferences: </b><div class="badge pull-right"><%= @offer.bid.preference_other_level %></div></div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="preference-box">
+                <%= @offer.bid.preference_other %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- end of player's comp request -->
+
+  <!-- start of your offer -->
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+			<h3 class="panel-title text-center">
+      	Your Offer
+			</h3>
+    </div>
+
+    <div class="well">
+      <fieldset>
+        <div class="row">
+          <div class="col-sm-5">Offer number:</div>
+          <div class="col-sm-7"><%= @offer.reference_number %></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-5">Offer submission date:</div>
+          <div class="col-sm-7"><%= @offer.created_at.strftime("%B %d, %Y") %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-5">Offer expiration date & time:</div>
+          <div class="col-sm-7">
+            <%= @offer.expiration_date.strftime("%B %d, %Y") %>&nbsp;
+            <%= @offer.expiration_time.strftime("%l:%M %p") %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-5">Offer includes reimbursement of Player's bid fee?</div>
+          <div class="col-sm-7"><%= @offer.reimbursement_bid_fee ? 'Yes' : 'No' %></div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-5">Offer includes the Player's request from their bid?</div>
+          <div class="col-sm-7">
+            <%= @offer.agree_player_requests == "All" ? 'Yes, all of the requests are included in this offer' : (@offer.agree_player_requests == "Some" ? 'No, some of the requests are included in this offer' : 'No, none of the requests are included in this offer') %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-5">Offer includes additional perks?</div>
+          <div class="col-sm-7"><%= @offer.offer_additional_perks ? 'Yes' : 'No' %></div>
+        </div>
+
+      </fieldset>
+      <br />
+      <div class="row">
+        <div class="col-sm-5">Offer Details?</div>
+        <div class="col-sm-7 text-right">
+          Attached file:
+          <% if not @offer.attach_file_to_offer.url.nil? %>
+            <a href="<%= @offer.attach_file_to_offer.url %>">
+              <%= @offer.attach_file_to_offer.url.split("/").last %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+
+      <fieldset>
+        <%= @offer.offer_comment.html_safe %>
+      </fieldset>
+
+      <br />
+      <div class="row">
+        <div class="col-sm-5">Offer Conditions?</div>
+        <div class="col-sm-7 text-right">
+          Attached file:
+          <% if not @offer.attach_file_to_message.url.nil? %>
+            <a href="<%= @offer.attach_file_to_message.url %>">
+              <%= @offer.attach_file_to_message.url.split("/").last %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+
+      <fieldset>
+        <%= @offer.message_to_player.html_safe %>
+      </fieldset>
+
+    </div>
+  </div>
+  <!-- end of your offer -->
+
+  <!-- start of player's bid history and casino rating -->
+  <div class="panel panel-primary">
+    <div class="panel-heading text-center">
+      Player's Bid History and Casino Rating
+    </div>
+
+    <div class="well">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th class="text-center">Category</th>
+                <th class="text-center">Wager Level</th>
+                <th class="text-center">Bids<br/>Submitted</th>
+                <th class="text-center">Offers<br/>Accepted</th>
+                <th class="text-center">Casino Rating<br/>(Highest: 5)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center">Dolphin</td>
+                <td class="text-center">$10,000 - $50,000</td>
+                <td class="text-center"><%= @offer.bid.user.bids.where("player_category=?", "Dolphin").count %></td>
+                <td class="text-center">
+                  <%= @offer.bid.user.bids.where("status=? or status=? or status=?", "Accepted", "Responed", "Confirmed").where("player_category=?", "Dolphin").count %>
+                </td>
+                <td class="text-center">
+                  -
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">Orca</td>
+                <td class="text-center">$50,001 - $200,000</td>
+                <td class="text-center"><%= @offer.bid.user.bids.where("player_category=?", "Orca").count %></td>
+                <td class="text-center">
+                  <%= @offer.bid.user.bids.where("status=? or status=? or status=?", "Accepted", "Responed", "Confirmed").where("player_category=?", "Orca").count %>
+                </td>
+                <td class="text-center">
+                  -
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">Gray Whale</td>
+                <td class="text-center">$200,001 - $500,000</td>
+                <td class="text-center"><%= @offer.bid.user.bids.where("player_category=?", "Gray Whale").count %></td>
+                <td class="text-center">
+                  <%= @offer.bid.user.bids.where("status=? or status=? or status=?", "Accepted", "Responed", "Confirmed").where("player_category=?", "Gray Whale").count %>
+                </td>
+                <td class="text-center">
+                  -
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">Fin Whale</td>
+                <td class="text-center">$500,001 - $1,000,000</td>
+                <td class="text-center"><%= @offer.bid.user.bids.where("player_category=?", "Fin Whale").count %></td>
+                <td class="text-center">
+                  <%= @offer.bid.user.bids.where("status=? or status=? or status=?", "Accepted", "Responed", "Confirmed").where("player_category=?", "Fin Whale").count %>
+                </td>
+                <td class="text-center">
+                  -
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">Blue Whale</td>
+                <td class="text-center">More than $1,000,000</td>
+                <td class="text-center"><%= @offer.bid.user.bids.where("player_category=?", "Blue Whale").count %></td>
+                <td class="text-center">
+                  <%= @offer.bid.user.bids.where("status=? or status=? or status=?", "Accepted", "Responed", "Confirmed").where("player_category=?", "Blue Whale").count %>
+                </td>
+                <td class="text-center">
+                  -
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of player's bid history and casino rating -->
+
+</div>

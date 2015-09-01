@@ -1,0 +1,20 @@
+<div class="container">
+	</br>
+	<%= link_to("<< Back to List of Casinos", {action: 'index'}, class: 'btn btn-primary') %></br>
+	
+	<h1>Update Bid</h1>
+	
+	</br>
+	</br>
+
+	<%= form_for @casino, url: {action: "update"} do |f| %>
+ 
+	<%= render(partial: "form", locals: {f: f}) %>
+	
+	<%= f.submit("Update Casino", class: "btn btn-primary btn-lg") %>
+
+	<% end %>
+	
+	</br>
+	</br>
+</div>

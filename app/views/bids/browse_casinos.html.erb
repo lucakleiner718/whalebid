@@ -1,0 +1,215 @@
+<div class="container">
+
+	<h1 class="text-center">Select Casinos for <span id="bid_name"></span></h1>
+
+	<div class="row form-group">
+		<div class="pull-left">
+			<p>
+				Finished selecting casinos?<br/>
+				<%= link_to("<<Back to My Bid", new_bid_path, class: "btn btn-primary full") %>
+			</p>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-sm-12 well">
+			Below is a list of our participating casinos.
+			<br/>
+			Click on More Info to see the details about a particular casino. Click Add to Bid to add that casino to your list of Selected Casinos.
+			<br />
+			You can filter the list using the navigation pane on the left. When finished, click << Back to My Bid
+		</div>
+	</div>
+
+	<div class="row form-group casinos-list-wrapper">
+		<div class="col-sm-3">
+			<div class="panel panel-primary">
+		      	<div class="panel-heading">
+		        	<h3 class="panel-title">Filter Casino List</h3>
+		      	</div>
+
+		      	<div class="well">
+		      		<label>Search:</label>
+		      		<div class="form-group">
+		      			<input type="text" name="query" id="query" class="full" value="<%= params[:query] %>">
+		      		</div>
+		      		<a href="javascript:findCasinos()" class="btn btn-primary">Find</a>
+		      	</div>
+				<ul class="list-group">
+					<li class="list-group-item casino-market-item <%= 'active' if !params[:market] ||params[:market] == '' || params[:market] == 'all' %>">
+						<span class="badge"><%= @total_count %></span>
+						<a href="javascript:filterCasinos('')">All US Casinos</a>
+					</li>
+				<% @casino_markets.each do |market| %>
+					
+				  	<li class="list-group-item casino-market-item <%= 'active' if params[:market] == market %>">
+				  	<% if @markets_with_count[market] %>
+				    	<span class="badge"><%= @markets_with_count[market] %></span>
+				    <% else %>
+				    	<span class="badge">0</span>
+				    <% end %>
+				    	<a href="javascript:filterCasinos('<%= market %>')"><%= market %></a>
+				  </li>
+				 <% end %>
+				</ul>
+			</div>
+			
+		
+		</div>
+		<div class="col-sm-6">
+			<table class="table table-bordered table-condensed">
+			  <tr class="bid-index">
+					<th>Casino Name</th>
+					<th>Market</th>
+					<th>Bids<br />Received</th>
+					
+					<th>Show</th>
+					<th>Select</th>
+			  </tr>
+
+			  <% @casinos.each do |casino| %>
+			  <tr class="bid-index">
+		    
+					<td><%= casino.casino_name %></td>
+					<td><%= casino.casino_market%></td>
+					<td><%= casino.bids.count %></td>
+			    			    
+					<td class="actions">
+					    <a href="#" data-href="<%= browse_casinos_bids_path %>" data-casino-id="<%= casino.id %>" class="casino-more-link btn btn-primary btn-sm">More Info</a>
+				    </td>
+
+				    <td class="actions">
+					    <a href="#" class="casino-add2bid-link btn btn-primary btn-sm" data-casino-name="<%= casino.casino_name %>" data-casino-id="<%= casino.id %>">Add to Bid</a>
+				    </td>
+			  </tr>
+			  <% end %>
+			</table>
+		</div>
+
+		<div class="col-sm-3">
+			<div class="panel panel-primary">
+		      	<div class="panel-heading">
+		        	<h3 class="panel-title">Selected Casinos<br />(Up to 5)</h3>
+		      	</div>
+
+		      	<div class="form-group">
+		      		<div class="col-sm-12 casinos-in-bid">
+		      			<br />
+		      			<div class="form-group casino-item0">
+		      				<div class="casino-name">
+		      					1. (None)
+		      				</div>
+		      				<a href="#" class="btn-remove btn btn-primary btn-sm" data-index="0">Remove</a>
+		      			</div>
+
+		      			<div class="form-group casino-item1">
+		      				<div class="casino-name">
+		      					2. (None)
+		      				</div>
+		      				<a href="#" class="btn-remove btn btn-primary btn-sm" data-index="1">Remove</a>
+		      			</div>
+
+		      			<div class="form-group casino-item2">
+		      				<div class="casino-name">
+		      					3. (None)
+		      				</div>
+		      				<a href="#" class="btn-remove btn btn-primary btn-sm" data-index="2">Remove</a>
+		      			</div>
+
+		      			<div class="form-group casino-item3">
+		      				<div class="casino-name">
+		      					4. (None)
+		      				</div>
+		      				<a href="#" class="btn-remove btn btn-primary btn-sm" data-index="3">Remove</a>
+		      			</div>
+
+		      			<div class="form-group casino-item4">
+		      				<div class="casino-name">
+		      					5. (None)
+		      				</div>
+		      				<a href="#" class="btn-remove btn btn-primary btn-sm" data-index="4">Remove</a>
+		      			</div>
+		      			
+		      		</div>
+		      	</div>
+
+		      	<div class="form-group">
+					<div class="col-sm-12">
+						<p>
+							Finished selecting casinos?<br/>
+							<%= link_to("<<Back to My Bid", new_bid_path, class: "btn btn-primary full") %>
+						</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+		    </div>
+		</div>
+	</div>
+
+</div>
+
+<script>
+	var current_market = '<%= params[:market] %>'
+	function findCasinos(){
+		location.href = '<%= browse_casinos_bids_path %>?market=' + current_market + '&query=' + $('#query').val(); 
+	}
+
+	function filterCasinos(market){
+		current_market = market;
+		location.href = '<%= browse_casinos_bids_path %>?market=' + current_market + '&query=' + $('#query').val(); 
+	}
+
+
+	if($.cookie("temp_bid") == undefined || $.cookie("temp_bid") == ""){
+		location.href="<%= new_bid_path %>"
+	}
+
+	var formObj = JSON.parse($.cookie("temp_bid"));
+	console.log(formObj);
+
+	$(document).ready(function(){
+		function loadCasinos(){
+			$("#bid_name").html(formObj["bid[bid_name]"]);
+			for(var i=0; i < formObj["casinos[]"].length; i++){
+				if(formObj["casinos[]"][i] != ""){
+					$(".casino-item" + i).find(".casino-name").html((i + 1) + ". " + formObj.casino_names[i]);
+				}else{
+					$(".casino-item" + i).find(".casino-name").html((i + 1) + ". (None)");
+				}
+			}
+
+			$.removeCookie("temp_bid", { path: '/' });
+			$.cookie("temp_bid", JSON.stringify(formObj), { path: '/' });
+		}
+
+		loadCasinos();
+
+		$(".casino-add2bid-link").click(function(e){
+			e.preventDefault();
+			var casino_id = $(this).data("casino-id");
+			var casino_name = $(this).data("casino-name");
+			for(var i=0; i < formObj["casinos[]"].length; i++){
+				if(formObj["casinos[]"][i] == ""){
+					formObj["casinos[]"][i] = casino_id;
+					formObj.casino_names[i] = casino_name;
+					loadCasinos();
+					return;
+				}
+			}
+			alert("Casinos in your bid is full!");
+		});
+
+		$(".btn-remove").click(function(e){
+			e.preventDefault();
+			var index = $(this).data("index");
+			formObj["casinos[]"][index] = "";
+			loadCasinos();
+		});
+
+		$('.casino-more-link').click(function(e){
+			e.preventDefault();
+			location.href = $(this).data('href') + '?casino_id=' + $(this).data('casino-id') + '&market=' + current_market + '&query=' + $('#query').val(); 
+		});
+	});
+</script>

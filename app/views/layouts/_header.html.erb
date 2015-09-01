@@ -1,0 +1,81 @@
+<%
+	active_classes = ['bids' => ""]
+%>
+<div class="container">
+	<!-- <div><%= params.inspect %></div> -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to("Whalebid", root_path, class: "nav navbar-brand") %>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      	<ul class="nav navbar-nav navbar-left">
+      	<% if not user_signed_in? %>
+	        <li class="<%= "active" if params[:controller] == "registrations" and params[:action] == "new" %>"><%= link_to "Sign Up", new_user_registration_path %></li>
+	    <% elsif current_user.player %>
+	    	
+	    	<li class="<%= "active" if params[:controller] == "bids" and params[:action] == "new" %>"><%= link_to("Create Bid", new_bid_path) %></li>
+	    	<li class="<%= "active" if params[:controller] == "bids" and params[:action] == "current" %>"><%= link_to("Manage Offers", current_bids_path) %></li>
+	    	<li class="<%= "active" if params[:controller] == "bids" and params[:action] == "history" %>"><%= link_to("Bid History", history_bids_path) %></li>
+	    <% elsif current_user.casino %>
+	    	<li class="<%= "active" if params[:controller] == "bids" and params[:action] == "casino_bids" %>"><%= link_to("Review Player Bids", casino_bids_bids_path) %></li>	
+	    	<li class="<%= "active" if params[:controller] == "offers" and params[:action] == "index" %>"><%= link_to("Manage Offers", offers_path) %></li>
+	    	<li class="<%= "active" if params[:controller] == "offers" and params[:action] == "history" %>"><%= link_to("Offer History", history_offers_path) %></li>
+	    	<li class=""><%= link_to("Dashboard", "#") %></li>
+	    <% end %>
+	    	<li class="<%= "active" if params[:controller] == "casinos" and params[:action] == "index" %>"><%= link_to("Casinos", casinos_path) %></li>
+
+	    <% if user_signed_in? and current_user.player %>
+			<li><%= link_to "How It Works" %></li>
+			<li><%= link_to "Benefits" %></li>
+		<% end %>
+			<li><%= link_to "Help" %></li>
+		<% if user_signed_in? && current_user.player %>
+			<li class="<%= "active" if params[:controller] == "registrations" and params[:action] == "edit" %>"><%= link_to "Account", edit_user_registration_path %></li>
+		<% elsif user_signed_in? && current_user.casino %>
+			<li class="<%= "active" if params[:controller] == "registrations" and params[:action] == "edit" %>"><%= link_to "Account", edit_user_registration_path + "?type=casino" %></li>
+		<% end %>
+
+			
+      	</ul>
+    <% if not user_signed_in? %>
+		<form class="form-inline nav navbar-nav login navbar-right" role="form" action="<%= user_session_path %>" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= session[:_csrf_token] %>">
+		  	<div class="form-group">
+		    	<label class="sr-only" for="user_email">Email</label>
+		    	<input type="email" class="form-control" id="user_email" name="user[email]" placeholder="Email">
+		  	</div>
+		  	<div class="form-group">
+		    	<label class="sr-only" for="user_password">Password</label>
+		    	<input type="password" class="form-control" id="user_password" name="user[password]" placeholder="Password">
+		  	</div>
+		  	<div class="checkbox" class="navbar-nav">
+		    	<label>
+		      		<input type="checkbox" id="user_remember_me" name="user[remember_me]" value="1"> Remember me
+		    	</label>
+		  	</div>
+		  	<button type="submit" class="btn btn-primary">Sign in</button>
+		</form>
+
+	<% else %>
+		<ul class="nav navbar-nav navbar-right">
+			<li><%= link_to "Logged in as " + current_user.fullname %></li>
+			<li><%= link_to("Sign Out", destroy_user_session_path, method: "delete") %></li>
+		</div>
+
+	<% end %>
+
+    </div><!-- /.navbar-collapse -->
+  </nav>
+</div><!-- /.container-fluid -->
+
+

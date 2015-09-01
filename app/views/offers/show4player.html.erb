@@ -1,0 +1,295 @@
+<div class="well">
+
+	<div class="row form-group">
+    <div class="col-sm-3">
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      &nbsp;<br/>
+      <%= link_to "<< Back to Manage Offers List", current_bids_path, class: "btn btn-primary btn-sm" %>
+
+    </div>
+    <div class="col-sm-6 text-center">
+      <h1>
+      <% if @offer.offer_status == 'Accepted' %>
+        Show Casino Offer<br/>
+        <b><%= @offer.casino.casino_name %></b>
+      <% else %>
+        Show Casino Offer<br/>
+        <b><%= @offer.casino.casino_name %></b>
+      <% end %>
+      </h1>
+      <h4>
+      <% if @offer.offer_status == 'Accepted' %>
+        This offer has been accepted!<br/>
+        You accepted on <%= @offer.updated_at.strftime("%B %d, %Y") %>
+      <% end %>
+      </h4>
+    </div>
+    <div class="col-sm-3">
+      <div class="pull-right">
+      <% if @offer.offer_status.nil? %>
+        &nbsp;<br/>
+        &nbsp;<br/>
+        &nbsp;<br/>
+        <%= link_to "Accept This Offer!", accept_offer_path, class: "btn btn-primary btn-sm full btn-make-offer", confirm: "Are you sure you want to accept this offer?  If you accept, all other offers will be marked as Declined." %><br/>
+        &nbsp;<br/>
+        <%= link_to "Decline This Offer!", decline_offer_path, class: "btn btn-primary btn-cancel btn-sm full" %>
+      <% end %>
+      </div>
+    </div>
+	</div>
+
+	<div class="panel panel-primary">
+      <div class="panel-heading text-center">
+      	Offer from <%= @offer.casino.casino_name %>
+      </div>
+
+      <div class="well">
+      	<fieldset>
+      		<div class="row">
+      			<div class="col-sm-5">In reference to bid number:</div>
+      			<div class="col-sm-7"><%= @offer.bid.reference_number %></div>
+      		</div>
+      		<div class="row">
+      			<div class="col-sm-5">From player username:</div>
+      			<div class="col-sm-7"><%= @offer.casino.user.fullname %></div>
+      		</div>
+      	</fieldset>
+
+      	<fieldset>
+      		<div class="row">
+      			<div class="col-sm-5">Casino offer number:</div>
+      			<div class="col-sm-7"><%= @offer.reference_number %></div>
+      		</div>
+      		<div class="row">
+      			<div class="col-sm-5">Offer submission date:</div>
+      			<div class="col-sm-7"><%= @offer.created_at.strftime("%B %d, %Y") %></div>
+      		</div>
+
+      		<div class="row">
+      			<div class="col-sm-5">Offer expiration date & time:</div>
+      			<div class="col-sm-7">
+      				<%= @offer.expiration_date.strftime("%B %d, %Y") %>&nbsp;
+      				<%= @offer.expiration_time.strftime("%l:%M %p") %>
+      			</div>
+      		</div>
+
+      		<div class="row">
+      			<div class="col-sm-5">Offer includes reimbursement of Player's bid fee?</div>
+      			<div class="col-sm-7"><%= @offer.reimbursement_bid_fee ? 'Yes' : 'No' %></div>
+      		</div>
+
+      		<div class="row">
+      			<div class="col-sm-5">Offer includes the Player's request from their bid?</div>
+      			<div class="col-sm-7">
+      				<%= @offer.agree_player_requests == "All" ? 'Yes, all of the requests are included in this offer' : (@offer.agree_player_requests == "Some" ? 'No, some of the requests are included in this offer' : 'No, none of the requests are included in this offer') %>
+      			</div>
+      		</div>
+
+      		<div class="row">
+      			<div class="col-sm-5">Offer includes additional perks?</div>
+      			<div class="col-sm-7"><%= @offer.offer_additional_perks ? 'Yes' : 'No' %></div>
+      		</div>
+
+      	</fieldset>
+      	<br />
+      	<div class="row">
+  			<div class="col-sm-5">Offer Details?</div>
+  			<div class="col-sm-7 text-right">
+  				Attached file:
+          <% if not @offer.attach_file_to_offer.url.nil? %>
+    				<a href="<%= @offer.attach_file_to_offer.url %>">
+    					<%= @offer.attach_file_to_offer.url.split("/").last %>
+    				</a>
+          <% end %>
+  			</div>
+  		</div>
+
+  		<fieldset>
+  			<%= @offer.offer_comment.html_safe %>
+  		</fieldset>
+
+  		<br />
+      	<div class="row">
+  			<div class="col-sm-5">Offer Conditions?</div>
+  			<div class="col-sm-7 text-right">
+  				Attached file:
+          <% if not @offer.attach_file_to_message.url.nil? %>
+    				<a href="<%= @offer.attach_file_to_message.url %>">
+    					<%= @offer.attach_file_to_message.url.split("/").last %>
+    				</a>
+          <% end %>
+  			</div>
+  		</div>
+
+  		<fieldset>
+  			<%= @offer.message_to_player.html_safe %>
+  		</fieldset>
+
+      </div>
+  </div>
+
+  <div class="panel panel-primary">
+      <div class="panel-heading text-center">
+      	Your bid requests
+      </div>
+
+      <fieldset>
+      	<div class="row">
+      		<label class="col-sm-3">
+      			Arrival Date:
+      		</label>
+      		<label class="col-sm-3">
+      			Departuer Date:
+      		</label>
+      		<label class="col-sm-3">
+      			Adults:
+      		</label>
+      		<label class="col-sm-3">
+      			Children:
+      		</label>
+      	</div>
+      	<div class="row">
+      		<div class="col-sm-3">
+      			<%= @offer.bid.arrival_date.strftime("%B %d, %Y") %>
+      		</div>
+      		<div class="col-sm-3">
+      			<%= @offer.bid.arrival_date.strftime("%B %d, %Y") %>
+      		</div>
+      		<div class="col-sm-3">
+      			<%= @offer.bid.adults %>
+      		</div>
+      		<div class="col-sm-3">
+      			<%= @offer.bid.children %>
+      		</div>
+      	</div>
+      </fieldset>
+
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12"><b>Accomodations:</b><%= @offer.bid.preference_accomodations_level %></div>
+              
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <div class="preference-box">
+                  <%= @offer.bid.preference_accomodations %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12"><b>Dining:</b><%= @offer.bid.preference_dining_level %></div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <div class="preference-box">
+                  <%= @offer.bid.preference_dining %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12"><b>Entertainment & Recreation:</b><%= @offer.bid.preference_entertainment_level %></div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <div class="preference-box">
+                  <%= @offer.bid.preference_entertainment %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+
+            <div class="row">
+              <div class="col-sm-12"><b>Transportation:</b><%= @offer.bid.preference_transportation_level %></div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <div class="preference-box">
+                  <%= @offer.bid.preference_transportation %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12"><b>Gaming:</b><%= @offer.bid.preference_gaming_level %></div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <div class="preference-box">
+                  <%= @offer.bid.preference_gaming %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+
+            <div class="row">
+              <div class="col-sm-12"><b>Other Preferences:</b><%= @offer.bid.preference_other_level %></div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="preference-box">
+                  <%= @offer.bid.preference_other %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+  </div>
+
+</div>
+
+<% if flash[:accept_notification] %>
+<!-- Accepted Notification Modal -->
+<div class="modal fade" id="acceptedNotificationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Accepted Offer Notification</h4>
+      </div>
+      <div class="modal-body">
+        <%= flash[:accept_notification].html_safe %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end of accepted notification model -->
+
+<script>
+$(document).ready(function(){
+
+  $('#acceptedNotificationModal').modal();
+
+});
+</script>
+<% end %>

@@ -1,0 +1,394 @@
+<div class="well">
+
+	<h1 class="text-center">Review Player Bids<br/><%= current_user.casino.casino_name %></h1>
+
+	<!-- start of open player bids -->
+	<div class="panel panel-primary bordered-table-container">
+		<div class="panel-heading">
+        	<h3 class="panel-title text-center">Open Player Bids</h3>
+      	</div>
+		<div class="filters">
+			<div class="table-cell">
+				Filters:&nbsp;&nbsp;
+			</div>
+			<div class="table-cell full">
+				<div class="row">
+					<div class="col-sm-3">
+						<input type="checkbox" name="bid_status_show_all_open" id="bid_status_show_all_open" checked="true" value="Awaiting Offer, Not Subscribed" class="chk-bid-status open all">&nbsp;Bid Status - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_status_awaiting_open" id="bid_status_awaiting_open" checked="true" class="chk-bid-status open" value="Awaiting Offer">&nbsp;Show bids awaiting offer<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_status_not_subscription_open" id="bid_status_not_subscription_open" checked="true" value="Not Subscribed" class="chk-bid-status open">&nbsp;Show bids not in subscription
+					</div>
+					<div class="col-sm-3">
+						<input type="checkbox" name="bid_type_show_all_open" id="bid_type_show_all_open" checked="true" class="chk-bid-type open all" value="Select-Open, Market-Open">&nbsp;Bid Type - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_type_select_open" id="bid_type_select_open" checked="true" class="chk-bid-type open" value="Select-Open">&nbsp;Show select bids<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_type_market_open" id="bid_type_market_open" checked="true" class="chk-bid-type open" value="Market-Open">&nbsp;Show market bids
+					</div>
+					<div class="col-sm-3">
+						<input type="checkbox" name="player_category_show_all_open" id="player_category_show_all_open" checked="true" value="Dolphin-Open, Orca-Open, Gray Whale-Open, Fin Whale-Open, Blue Whale-Open" class="chk-player-category open all">&nbsp;Player Category - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="player_category_dolphins_open" id="player_category_dolphins_open" checked="true" value="Dolphin-Open" class="chk-player-category open">&nbsp;Dolphins: $10,000 - $50,000<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="player_category_orcas_open" id="player_category_orcas_open" checked="true" value="Orca-Open" class="chk-player-category open">&nbsp;Orcas: $50,001 - $200,000<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="player_category_gray_whales_open" id="player_category_gray_whales_open" checked="true" value="Gray Whale-Open" class="chk-player-category open">&nbsp;Gray Whales: $200,001 - $500,000<br/>
+
+					</div>
+					<div class="col-sm-3">
+						<br/>
+						<input type="checkbox" name="player_category_fin_whales_open" id="player_category_fin_whales_open" checked="true" value="Fin Whale-Open" class="chk-player-category open">&nbsp;Fin Whales: $500,001 - $1,000,000<br/>
+						<input type="checkbox" name="player_category_blue_whales_open" id="player_category_blue_whales_open" checked="true" value="Blue Whale-Open">&nbsp;Blue Whales: Over $1 million<br/>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table bids-table table-bordered table-hover">
+					<thead>
+					  	<tr>
+							<th>Bid Number</th>
+							<th>Player Username</th>
+							<th>Wager Level</th>
+							<th>Arrival Date</th>
+							<th>Bid Close Date</th>
+							<th>Bid Type</th>
+							<th>Offers Received</th>
+							<th>Bid Status</th>
+							<th>Action</th>
+							<th>Kind</th>
+							<th>Player Category</th>
+					  	</tr>
+					</thead>
+
+					<tbody>
+					<% @open_bids.each do |bid| %>
+						<tr>
+							<td><%= bid.reference_number %></td>
+							<td><%= bid.user.player.username %></td>
+							<td><%= bid.wager_level %></td>
+							<td><%= bid.arrival_date.strftime("%B %d, %Y") %></td>
+							<td><%= bid.close_at.strftime("%B %d, %Y") %></td>
+							<td><%= bid.by_market ? "Market" : "Select" %></td>
+							<td><%= bid.offers.where("offer_status is null or offer_status!=?", "Declined by casino").count %></td>
+							<td>Awaiting Offer</td>
+							<td><%= link_to "Show", bid_path(bid.id) + "?type=casino", class: "btn btn-primary" %></td>
+							<td>Open</td>
+							<td><%= bid.player_category %></td>
+						</tr>
+						
+					<% end %>
+						
+					</tbody>
+										       
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- end of open player bids -->
+	<!-- start of closed player bids -->
+	<div class="panel panel-primary bordered-table-container">
+		<div class="panel-heading">
+        	<h3 class="panel-title text-center">Closed Player Bids</h3>
+      	</div>
+		<div class="filters">
+			<div class="table-cell">
+				Filters:&nbsp;&nbsp;
+			</div>
+			<div class="table-cell full">
+				<div class="row">
+					<div class="col-sm-3">
+						<input type="checkbox" name="bid_status_show_all_closed" id="bid_status_show_all_closed" checked="true" value="Closed - Declined Bid, Closed - Not Subscribed, Closed - No Offer" class="chk-bid-status closed all">&nbsp;Bid Status - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_status_declined" id="bid_status_declined_closed" checked="true" value="Closed - Declined Bid" class="chk-bid-status closed">&nbsp;Show declined bids<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_status_not_subscription_closed" id="bid_status_not_subscription_closed" checked="true" value="Closed - Not Subscribed" class="chk-bid-status closed">&nbsp;Show bids not in subscription<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_status_no_offer_closed" id="bid_status_no_offer_closed" checked="true" value="Closed - No Offer" class="chk-bid-status closed">&nbsp;Show bids with no offer
+					</div>
+					<div class="col-sm-3">
+						<input type="checkbox" name="bid_type_show_all_closed" id="bid_type_show_all_closed" checked="true" class="chk-bid-type closed all" value="Select-Open, Market-Closed">&nbsp;Bid Type - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_type_select_closed" id="bid_type_select_closed" checked="true" class="chk-bid-type closed" value="Market-Closed">&nbsp;Show select bids<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bid_type_market_closed" id="bid_type_market_closed" checked="true" class="chk-bid-type closed" value="Market-Closed">&nbsp;Show market bids
+					</div>
+					<div class="col-sm-3">
+						<input type="checkbox" name="player_category_show_all" id="player_category_show_all" checked="true" value="Dolphin-Closed, Orca-Closed, Gray Whale-Closed, Fin Whale-Closed, Blue Whale-Closed" class="chk-player-category closed all">&nbsp;Player Category - Show All<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="player_category_dolphins_closed" id="player_category_dolphins_closed" checked="true" value="Dolphin-Closed" class="chk-player-category closed">&nbsp;Dolphins: $10,000 - $50,000<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="player_category_orcas_closed" id="player_category_orcas_closed" checked="true" value="Orca-Closed" class="chk-player-category closed">&nbsp;Orcas: $50,001 - $200,000<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="player_category_gray_whales_closed" id="player_category_gray_whales_closed" checked="true" value="Gray Whale-Closed" class="chk-player-category closed">&nbsp;Gray Whales: $200,001 - $500,000<br/>
+
+					</div>
+					<div class="col-sm-3">
+						<br/>
+						<input type="checkbox" name="player_category_fin_whales_closed" id="player_category_fin_whales_closed" checked="true" value="Fin Whale-Closed" class="chk-player-category closed">&nbsp;Fin Whales: $500,001 - $1,000,000<br/>
+						<input type="checkbox" name="player_category_blue_whales_closed" id="player_category_blue_whales_closed" checked="true" value="Blue Whale-Closed" class="chk-player-category closed">&nbsp;Blue Whales: Over $1 million<br/>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table bids-table table-bordered table-hover">
+					<thead>
+					  	<tr>
+							<th>Bid Number</th>
+							<th>Player Username</th>
+							<th>Wager Level</th>
+							<th>Arrival Date</th>
+							<th>Bid Close Date</th>
+							<th>Bid Type</th>
+							<th>Offer Receives</th>
+							<th>Bid Status</th>
+							<th>Action</th>
+							<th>Kind</th>
+							<th>Player Category</th>
+					  	</tr>
+					</thead>
+
+					<tbody>
+					<% @closed_bids.each do |bid| %>
+						<tr>
+							<td><%= bid.reference_number %></td>
+							<td><%= bid.user.player.username %></td>
+							<td><%= bid.wager_level %></td>
+							<td><%= bid.arrival_date.strftime("%B %d, %Y") %></td>
+							<td><%= bid.close_at.strftime("%B %d, %Y") %></td>
+							<td><%= bid.by_market ? "Market" : "Select" %></td>
+							<td><%= bid.offers.where("offer_status is null or offer_status!=?", "Declined by casino").count %></td>
+							<td>
+								<% if bid.offers.where("casino_id=?", current_user.casino.id).count == 0  %>
+									Closed - No Offer
+								<% elsif bid.offers.find_by("casino_id=?", current_user.casino.id).offer_status == "Declined by casino" %>
+									Closed - Declined Bid
+								<% end %>
+							</td>
+							<td><%= link_to "Show", bid_path(bid.id) + "?type=casino", class: "btn btn-primary" %></td>
+							<td>Closed</td>
+							<td><%= bid.player_category %></td>
+						</tr>
+					<% end %>
+						
+					</tbody>
+										       
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- end of closed player bids -->
+
+	
+</div>
+
+<script>
+$(document).ready(function(e){
+	jQuery.fn.dataTableExt.oSort['date-dmy-asc']  = function(x,y) {
+		x_date = new Date(x);
+		y_date = new Date(y);
+		
+	    return ((x_date < y_date) ? -1 : ((x_date > y_date) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['date-dmy-desc']  = function(x,y) {
+		x_date = new Date(x);
+		y_date = new Date(y);
+	    return ((x_date > y_date) ? -1 : ((x_date < y_date) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['wager-level-asc']  = function(x,y) {
+		
+		if(x == "More than $1,000,000"){
+			return 1;
+		}
+
+		if(y == "More than $1,000,000"){
+			return -1;
+		}
+
+		x_value = parseInt(x.split(" - ")[0].replace(",", "").replace("$", ""));
+		y_value = parseInt(y.split(" - ")[0].replace(",", "").replace("$", ""));	
+
+	    return ((x_value < y_value) ? -1 : ((x_value > y_value) ?  1 : 0));
+	};
+
+	jQuery.fn.dataTableExt.oSort['wager-level-desc']  = function(x,y) {
+		
+		if(x == "More than $1,000,000"){
+			return -1;
+		}
+
+		if(y == "More than $1,000,000"){
+			return 1;
+		}
+
+		x_value = parseInt(x.split(" - ")[0].replace(",", "").replace("$", ""));
+		y_value = parseInt(y.split(" - ")[0].replace(",", "").replace("$", ""));		
+	    return ((x_value > y_value) ? -1 : ((x_value < y_value) ?  1 : 0));
+	};
+
+    var bidStatusArray = ["Awaiting Offer", "Not Subscribed", "Closed - Declined Bid", 
+    					"Closed - Not Subscribed", "Closed - No Offer"];
+    var bidTypeArray = ["Select-Open", "Market-Open", "Select-Closed", "Market-Closed"];
+
+    var playerCategoryArray = ["Dolphin-Open", "Gray Whale-Open", "Blue Whale-Open", "Orca-Open", "Fin Whale-Open", "Blue Whale-Open", "Dolphin-Closed", "Gray Whale-Closed", "Blue Whale-Closed", "Orca-Closed", "Fin Whale-Closed", "Blue Whale-Closed"];
+
+
+	jQuery.fn.dataTable.ext.search.push(
+	    function( settings, data, dataIndex ) {
+    		if( bidStatusArray.indexOf(data[7]) != -1 ){
+    			return true;
+    		}else{
+    			
+    			return false;
+    		}
+	    }
+	);
+
+	jQuery.fn.dataTable.ext.search.push(
+	    function( settings, data, dataIndex ) {
+    		if( bidTypeArray.indexOf(data[5] + "-" + data[9]) != -1 ){
+    			return true;
+    		}else{
+    			
+    			return false;
+    		}
+	    }
+	);
+
+	jQuery.fn.dataTable.ext.search.push(
+	    function( settings, data, dataIndex ) {
+    		if( playerCategoryArray.indexOf(data[10] + "-" + data[9]) != -1 ){
+    			return true;
+    		}else{
+    			
+    			return false;
+    		}
+	    }
+	);
+
+	var bids_table = $('.bids-table').DataTable( {
+		"dom": '<"wrapper"ftlip>',
+        "order": [[ 1, "asc" ]],
+        "paging":   true,
+        "ordering": true,
+        "info":     false,
+        "searching":true,
+        "aLengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "iDisplayLength": 5,
+
+       	"oLanguage": {
+       		"sLengthMenu": "Items per page _MENU_",
+         	"oPaginate": {
+           		"sNext": "Next",
+           		"sPrevious": "Previous",
+
+         	}
+       	},
+        "columnDefs": [
+		    { "orderable": false, "targets": 0},
+		    { "orderable": true, "targets": 1},
+		    { "orderable": true, "targets": 2, "type": "wager-level"},
+		    { "orderable": true, "targets": 3, "type": "date-dmy"},
+		    { "orderable": true, "targets": 4, "type": "date-dmy"},
+		    { "orderable": false, "targets": 5},
+		    { "orderable": false, "targets": 6},
+		    { "orderable": false, "targets": 7},
+		    { "orderable": false, "targets": 8},
+            { "orderable": false, "targets": 9,"visible": false},
+            { "orderable": false, "targets": 10,"visible": false}
+
+		]
+    } );
+
+
+    $(".dataTables_filter").hide();
+
+    $(".chk-bid-status").change(function(e){
+   		var values = $(this).val().split(", ");
+   		if($(this).is(":checked") == false){
+   			
+   			for(var i=0; i<values.length; i++){
+   				if(bidStatusArray.indexOf( values[i] ) != -1){
+   					bidStatusArray.splice(bidStatusArray.indexOf( values[i] ), 1)
+   				}
+   			}
+   		}else{
+   			for(var i=0; i<values.length; i++){
+   				if(bidStatusArray.indexOf( values[i] ) == -1){
+   					bidStatusArray.push( values[i] );
+   				}
+   			}
+   		}
+
+   		bids_table.draw();
+
+   	});
+
+   	$(".chk-bid-status.open.all").change(function(e){
+   		$(".chk-bid-status.open:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+   	$(".chk-bid-status.closed.all").change(function(e){
+   		$(".chk-bid-status.closed:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+   	$(".chk-bid-type").change(function(e){
+   		var values = $(this).val().split(", ");
+   		if($(this).is(":checked") == false){
+   			
+   			for(var i=0; i<values.length; i++){
+   				if(bidTypeArray.indexOf( values[i] ) != -1){
+   					bidTypeArray.splice(bidTypeArray.indexOf( values[i] ), 1)
+   				}
+   			}
+   		}else{
+   			for(var i=0; i<values.length; i++){
+   				if(bidTypeArray.indexOf( values[i] ) == -1){
+   					bidTypeArray.push( values[i] );
+   				}
+   			}
+   		}
+
+   		bids_table.draw();
+
+   	});
+
+   	$(".chk-bid-type.open.all").change(function(e){
+   		$(".chk-bid-type.open:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+   	$(".chk-bid-type.closed.all").change(function(e){
+   		$(".chk-bid-type.closed:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+   	$(".chk-player-category").change(function(e){
+   		var values = $(this).val().split(", ");
+   		if($(this).is(":checked") == false){
+   			
+   			for(var i=0; i<values.length; i++){
+   				if(playerCategoryArray.indexOf( values[i] ) != -1){
+   					playerCategoryArray.splice(playerCategoryArray.indexOf( values[i] ), 1)
+   				}
+   			}
+   		}else{
+   			for(var i=0; i<values.length; i++){
+   				if(playerCategoryArray.indexOf( values[i] ) == -1){
+   					playerCategoryArray.push( values[i] );
+   				}
+   			}
+   		}
+
+   		bids_table.draw();
+
+   	});
+
+   	$(".chk-player-category.open.all").change(function(e){
+   		$(".chk-player-category.open:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+   	$(".chk-player-category.closed.all").change(function(e){
+   		$(".chk-player-category.closed:not(.all)").prop("checked", $(this).is(":checked"));
+   	});
+
+});
+</script>

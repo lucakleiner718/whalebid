@@ -1,0 +1,81 @@
+<%= f.fields_for :casino, resource.casino do |casino_form| %>
+	<div class="well">
+		<div class="row form-group">
+			<%= casino_form.label(:total_table_games, "Total Number of Table Games", class: "col-sm-4") %>
+			<%= casino_form.text_field(:total_table_games, class: "number") %></br>
+		</div>
+		<div class="row form-group">
+			<%= casino_form.label(:total_slot_machines, "Total Number of Slot Machines", class: "col-sm-4") %>
+			<%= casino_form.text_field(:total_slot_machines, class: "number") %></br>
+		</div>
+		<div class="row form-group">
+			<%= casino_form.label(:have_vip_room, "Do you have a VIP Room?", class: "col-sm-4") %>
+			<%= casino_form.radio_button(:have_vip_room, true, checked: resource.casino.have_vip_room) %> Yes &nbsp;
+			<%= casino_form.radio_button(:have_vip_room, false, checked: !resource.casino.have_vip_room) %> No
+		</div>
+		<div id="if_vip">
+	 	<div class="row form-group col-sm-offset-1">
+	  		<label>If yes, then...</label>
+	 	</div>
+	 	<div class="row form-group">
+	  		<%= casino_form.label(:have_vip_lounge, "Do you have a VIP Lounge?", class: "col-sm-3 col-sm-offset-1") %>
+
+	    	<%= casino_form.radio_button(:have_vip_lounge, true, checked: resource.casino.have_vip_lounge) %> Yes &nbsp;
+			<%= casino_form.radio_button(:have_vip_lounge, false, checked: !resource.casino.have_vip_lounge) %> No
+	 	</div>
+	 	<div class="row form-group">
+	  		<%= casino_form.label(:have_private_gaming_tables, "Do you have private gaming tables?", class: "col-sm-3 col-sm-offset-1") %>
+	    	<%= casino_form.radio_button(:have_private_gaming_tables, true, checked: resource.casino.have_private_gaming_tables) %> Yes &nbsp;
+			<%= casino_form.radio_button(:have_private_gaming_tables, false, checked: !resource.casino.have_private_gaming_tables) %> No
+	 	</div>
+	 	<div class="row form-group">
+	  		<%= casino_form.label(:how_many_gaming_tables, "How many VIP gaming tables?", class: "col-sm-3 col-sm-offset-1") %>
+	    	<%= casino_form.text_field(:how_many_gaming_tables, class: "number") %></br>
+	 	</div>
+	 	<div class="row form-group">
+	  		<%= casino_form.label(:how_many_slot_machines, "How many VIP slot machines?", class: "col-sm-3 col-sm-offset-1") %>
+	    	<%= casino_form.text_field(:how_many_slot_machines, class: "number") %></br>
+	 	</div>
+	 </div>
+
+	<div class="row form-group">
+			<label class="col-sm-4">Max Bet(Bet Limit):</label>
+		</div>
+		<div class="row form-group">
+			<%= casino_form.label(:max_bet_blackjack, "Blackjack", class: "col-sm-3 col-sm-offset-1") %>
+			$&nbsp;<%= casino_form.text_field(:max_bet_blackjack, class: "number") %></br>
+		</div>
+
+		<div class="row form-group">
+			<%= casino_form.label(:max_bet_baccarat, "Baccarat", class: "col-sm-3 col-sm-offset-1") %>
+			$&nbsp;<%= casino_form.text_field(:max_bet_baccarat, class: "number") %></br>
+		</div>
+
+		<div class="row form-group">
+			<%= casino_form.label(:max_bet_roulette, "Roulette", class: "col-sm-3 col-sm-offset-1") %>
+			$&nbsp;<%= casino_form.text_field(:max_bet_roulette, class: "number") %></br>
+		</div>
+
+		<div class="row form-group">
+			<%= casino_form.label(:max_bet_craps, "Craps", class: "col-sm-3 col-sm-offset-1") %>
+			$&nbsp;<%= casino_form.text_field(:max_bet_craps, class: "number") %></br>
+		</div>
+
+		<div class="row form-group">
+			<%= casino_form.label(:have_sports_betting_lounge, "Do you have a sports betting lounge?", class: "col-sm-4") %>
+			<%= casino_form.radio_button(:have_sports_betting_lounge, true, checked: resource.casino.have_sports_betting_lounge) %> Yes &nbsp;
+			<%= casino_form.radio_button(:have_sports_betting_lounge, false, checked: !resource.casino.have_sports_betting_lounge) %> No
+		</div>
+
+		<div class="row form-group">
+			<%= casino_form.label(:betting_limit_on_single_sporting, "What is the betting limit on a single sporting event?", class: "col-sm-4") %>
+			$&nbsp;<%= casino_form.text_field(:betting_limit_on_single_sporting, class: "number") %></br>
+		</div>
+
+	</div>
+
+	<div class="text-center">
+		<a href="javascript:goPage(1)" class="btn btn-primary btn-lg">Previous Page</a>
+		<a href="javascript:goPage(3)" class="btn btn-primary btn-lg">Next Page</a>
+	</div>
+<% end %>

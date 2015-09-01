@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> <%= content_for?(:title) ? yield(:title) :"Whale Project" %> </title>
+	<meta name ="description" content ="<%= content_for?(:description) ? yield(:description) :"Register as a casino whale and let casinos compete for your business." %>">  
+  	<%= stylesheet_link_tag    "application", media: "all"%>
+  	
+  	<%= javascript_include_tag "application" %>
+  	<script src="/lib/rangy-core.js"></script>
+  	<script src="/lib/rangy-highlighter.js"></script>
+  	<script src="/lib/rangy-textrange.js"></script>
+  	<script src="/lib/rangy-selectionsaverestore.js"></script>
+  	<script src="/lib/rangy-serializer.js"></script>
+  	<script src="/lib/rangy-classapplier.js"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="/lib/bootstrap-wysihtml5/bootstrap-wysihtml5.css"></link>
+	<script src="/lib/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"></script>
+	<script src="/lib/bootstrap-wysihtml5/bootstrap3-wysihtml5.js"></script>
+  	<%= csrf_meta_tags %>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+</head>
+<body>
+	
+	<%= render 'layouts/header' %>
+	
+	<%= render 'layouts/notice'%>		
+	
+	    <%= yield %>
+	    
+	<%= render 'layouts/footer' %>
+	
+	
+	
+</body>
+</html>
+
+<script>
+$(document).ready(function(){
+	// $( ".datepicker" ).each(function(){
+	// 	$(this).datepicker({"dateFormat": "dd/mm/yy"});
+	// });
+});
+</script>
+<%= yield(:head_js) %>
